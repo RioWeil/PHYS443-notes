@@ -1,0 +1,196 @@
+\section{Noether's Theorem Part II, Ward Identities}
+\subsection{Deriving the Energy-Momentum Tensor}
+We follow the Noether algorithm for finding the Noether current for the specific (and special) case of translations. As a reminder, on scalar fields transformations act in the following way:
+\begin{equation}
+    \phi(x^\mu) \to \phi'(x^\mu) = \phi(x^\mu + \alpha^\mu) \approx \phi(x) + \alpha^\mu \p_\mu \phi
+\end{equation}
+There are really $d+1$ transformations/symmetries here, one for each dimension; for each, there will be a corresponding Noether current:
+\begin{equation}
+    \alpha^{(\nu)} = j^{\mu(\nu)} = T^{\mu\nu}
+\end{equation}
+$T^{\mu\nu}$ is known as the energy-momentum, or stress tensor. What we will do today is compute this tensor for a general scalar theory. Let us compute this for the following QFT:
+\begin{equation}
+    S = -\int d^{d+1}x \frac{1}{2}(\p_\mu \phi_a)^2 + V(\phi_a(x))
+\end{equation}
+Note that this potential $V$ depends on some (translation-invariant) fields, i.e. it is not something like $V(x) = f(x)\phi_a(x)^2$ which would break translation invariance (and we would not have the symmetry in this case). Let us thus apply the Noether algorithm; we perform a local version of the transformation:
+\begin{equation}
+    \phi_a(x) \to \phi_a'(x) = \phi_a(x) + \alpha^\mu \p_\mu \phi_a(x)
+\end{equation}
+This would be like if I translated the field a different amount at different point in spacetime. This is not a symmetry, its a weird transformation. But, it is a symmetry in the case of $\alpha$ being a constant, and using that the variation (above, $\delta_\phi = \alpha^\mu \p_\mu \phi_a(x)$) is small, the change in the action will be small and thus allow us to identify the conserved current. Let us study the change in the action to linear order in $\alpha$, and arrange things such that we have a current times the derivative in $\alpha$:
+\begin{equation}
+    \begin{split}
+        \delta S &= -\int d^{d+1} \p_\mu \phi_a \p^\mu \delta \phi_a + V'(\delta\phi_a) 
+        \\ &= -\int d^{d+1} \p_\mu \phi_a \p^\mu (\alpha^\nu \p_\nu \phi_a) + V'(\phi_a)\alpha^\nu \p_\nu \phi_a
+        \\ &= -\int d^{d+1}x \p^\mu \alpha^\nu \p_\mu \phi_a \p_\nu \phi_a + \alpha^\nu \p_\mu \phi_a \p^\mu \p_\nu \phi_a + \alpha^\nu \p_\nu V(\phi_a(x))
+        \\ &= -\int d^{d+1}x \p^\mu \alpha^\nu \p_\mu \phi_a \p_\nu \phi_a + \alpha^\nu \frac{1}{2}\p_\nu(\p_\mu \phi_a)^2 + -V \p_\nu \alpha^\nu
+        \\ &= -\int d^{d+1}x \p^\mu \alpha^\nu \p_\mu \phi_a \p_\nu \phi_a - \p_\nu \alpha^\nu \frac{1}{2}(\p_\mu \phi_a)^2 + -V \p_\nu \alpha^\nu
+    \end{split}
+\end{equation}
+Where in the last two equalities we note the use of integration by parts (and discarding the boundary terms). In summary:
+\begin{equation}
+    \delta S = -\int d^{d+1}x \p^\mu \alpha ^\nu \p_\mu \phi_a \p_\nu \phi_a - \p_\nu \alpha^\nu [\frac{1}{2}(\p_\mu \phi_a)^2 + V(\phi_a)] = -\int d^{d+1}x \p^\mu \alpha^\nu j_{\mu(\nu)}
+\end{equation}
+Note that the term in the square brackets is just the Lagrangian! From our work above, we have thus identified the Noether current:
+\begin{equation}
+    j^{\mu(\nu)} = T^{\mu\nu} = \p^\mu \phi_a \p^\nu \phi_a - \eta^{\mu\nu}\left[\frac{1}{2}(\p_\mu \phi_a)^2 + V(\phi_a)\right]
+\end{equation}
+and this is conserved, i.e.:
+\begin{equation}
+    \p_\mu T^{\mu\nu} = 0.
+\end{equation}
+
+\subsection{The Energy-Momentum Tensor and Lorentz Invariance}
+The above result was the consequence of translation symmetry. We might then ask - what is the consequence of Lorentz symmetry? Interestingly, there is \emph{no} new conserved current as a consequence of Lorentz invariance, we just get the energy-momentum tensor again. How do we see this? Instead of:
+\begin{equation}
+    \phi(x^\mu) \to \phi'(x^\mu) = \phi(x^\mu + \alpha^\mu) \approx \phi + \alpha^\mu\p_\mu \phi
+\end{equation}
+we would have:
+\begin{equation}
+    \phi(x^\mu) \to \phi'(x^\mu) = \phi(x^\mu + \omega^{\mu}_{\sp\nu} x^\nu) \approx \phi + \omega^{\mu}_{\sp\nu} x^\nu \p_\mu \phi
+\end{equation}
+The Noether procedure would give:
+\begin{equation}
+    \delta S = \ldots = -\int d^{d+1}x\p^\mu (\omega^{\nu\rho}(x))j_{\mu(\nu\rho)}
+\end{equation}
+But! We've already done exactly this. A local lorentz transformation is just a special case of a local translation. If we make $\omega^{\mu}_{\sp\nu}(x)x^\nu$ local, this is the same thing as making $\alpha^\nu$ local in our previous construction; just set:
+\begin{equation}
+    \alpha^\nu(x) = \omega^{\nu}_{\sp\rho}(x)x^\rho
+\end{equation}
+and then we get:
+\begin{equation}
+    \delta S = -\int d^{d+1}x\p^\mu(\omega^{\nu\rho}(x)x_\rho)T_{\mu\nu}
+\end{equation}
+Let us expand the derivative via the product rule; the second term gives $\p^\mu x_\rho = \delta^{\mu}_\rho$ which is thus the contraction of the anti-symmetric $\omega$ with the symmetric $T$, and thus vanishes. So, only the first term from the product rule survives, and we get:
+\begin{equation}
+    \delta S = -\int d^{d+1}x \p^\mu \omega^{\nu\rho} x_\rho T_{\mu\nu} = -\frac{1}{2} -\int d^{d+1}x \p^\mu \omega^{\nu\rho}(x_\rho T_{\mu\nu} - x_\mu T_{\mu\rho})
+\end{equation}
+where in the last equality we antisymmetrize as the current is multiplied by an antisymmetric $\omega$.
+So the new Noether current is:
+\begin{equation}
+    j_{\mu(\nu\rho)} = x_\rho T_{\mu\nu} - x_\mu T_{\mu\rho}
+\end{equation}
+which is completely fixed after the stress tensor is known. Conservation thus implies:
+\begin{equation}
+    \p_\mu(T^{\mu\nu}x^\rho - T^{\mu\rho}x^\nu) = \p_\mu T^{\mu\nu} x^\rho - \p_\mu T^{\mu\rho}x^\nu + T^{\rho\nu} - T^{\nu\rho} = 0
+\end{equation}
+where we use the product rule to expand the derivative. So: If $T_{\mu\nu}$ is conserved and symmetric, L.I. buys you nothing. If it is conserved but not known to be symmetric, the L.I. implies that it is symmetric\footnote{There was the (slightly erroneous) step in the derivation where we assumed $T^{\mu\nu}$ to be symmetric; removing this assumption, we end up getting an extra term, but the consequence of L.I. $\implies$ symmetry still ends up holding.}. But the takeaway - L.I. does not give us a new conservation law, but if the symmetry of the stress tensor is not known, it can tell us more about it.
+
+\subsection{Components of the Energy-Momentum Tensor}
+Let's study the components of the stress tensor:
+\begin{equation}
+    T^{00} = \p^0\phi_a\p^0\phi_a + \mathcal{L} = \dot{\phi}_a^2 + \left(\frac{1}{2}(\p_\mu \phi_a)^2 + V(\phi_a)\right)
+\end{equation}
+and thus since $(\p_\mu \phi_a)^2 = -\frac{1}{2}\dot{\phi}_a^2 + \frac{1}{2}(\nabla \phi_a)^2$:
+\begin{equation}
+    T^{00} = \frac{1}{2}\dot{\phi}_a^2 + \frac{1}{2}(\nabla \phi_a)^2 + V(\phi_a) = \mathcal{H}
+\end{equation}
+in other words, the $00$-component is just the Hamiltonian density! This makes sense; the first $0$ index tells us we are looking at a density, and the second 0 index tells us we are looking at the current conserved due to time-translation invariance. The conserved charge is:
+\begin{equation}
+    H = \int d^dx T^{00}(t, \v{x}).
+\end{equation} 
+In other words, the Hamiltonian/Energy is the conserved charge associated with $\nu = 0$/time translation ($\p_t H = 0$); a fact that may have been familiar already.
+
+What are then the conserved charges associated with spatial translation symmetry? We study:
+\begin{equation}
+    T^{0i} = \p^0 \phi_a \p^i \phi_a = -\dot{\phi}_a \p_i \phi_a = -\pi_a \p_i \phi_a
+\end{equation}
+The associated charge is the momentum - this is what we studied in PS2:
+\begin{equation}
+    P^i = \int d^dx T^{0i} = -\int d^dx \pi_a \p_i \phi_a
+\end{equation}
+In the problem set, we used the number operator to construct this $P \sim \int_k k a_k^\dag a_k$, and indeed we see the same thing coming out of Noether's theorem - a lot less work than what we did in the pset! Also in that pset, we showed that the Noether charges are generators of the symmetry; in this case, this is the well known statement that:
+\begin{equation}
+    e^{-i\hat{P}_\mu \alpha^\mu}\hat{\phi}(x^\nu) e^{i\hat{P}_\mu\alpha^\mu} = \hat{\phi}(x^\mu + \alpha^\mu) = \hat{\phi}'(x^\mu)
+\end{equation}
+For infinitesimal transformations with $\alpha \ll 1$:
+\begin{equation}
+    \hat{\phi}(x) - i\alpha^\mu[\hat{P}_\mu, \hat{\phi}] \approx \hat{\phi}(x^\mu) + \alpha^\mu \p_\mu \hat{\phi}
+\end{equation}
+i.e.:
+\begin{equation}
+    [\hat{P}_\mu, \hat{\phi}(x)] = i\p_\mu \hat{\phi}
+\end{equation}
+
+\subsection{Noether Charges Generate Transformations}
+The above was a specific example, but this is in fact a much more a general phenomenon that the \emph{Noether charges generate the symmetry transformations}. For a general infinitesimal transformation:
+\begin{equation}
+    \phi_a \to \phi_a' = \phi_a + \delta \phi_a = \phi_a + \alpha^I\Delta_I \phi_a
+\end{equation}
+where $I$ runs over a set of symmetries. The charge associated with $\alpha^I$:
+\begin{equation}
+    Q_I = \int d^d x j_I^0(t, \v{x})
+\end{equation}
+satisfies:
+\begin{equation}
+    [Q_I, \phi_a] = i\Delta_I \phi_a.
+\end{equation}
+We will see two ways of proving this.
+\begin{itemize}
+    \item Hamiltonian approach - this is similar to what we did previously in PS2 with canonical quantization, and the general case we will do in PS6.
+    \item Path Integral approach - as a consequence of Ward Identities.
+\end{itemize}
+
+Thus far the path integral only seemed to produce time-ordered correlators, and we may have worried about its ability to produce more general objects, but here we will see that they can be used to generate commutators, so they are broadly useful. 
+
+\subsection{Ward Identities}
+We have thus far found a classical consequence of continuous symmetries; conserved currents ($\p_\mu j^\mu = 0$). These are classical because we found them by imposing the classical equation of motion. the quantum consequence is the Ward identity, which says that $\p_\mu \hat{j}^\mu$ \emph{almost} vanishes. More precisely; in a general time-ordered correlation function involving the current operator, we have:
+\begin{equation}
+    i\p_{x^\mu}\bra{0}\mathcal{T}\set{\hat{j}^\mu(x), \hat{O}_1(x_1), \ldots, \hat{O}_n(x_n)}\ket{0} = \sum_{i=1}^n \delta^{d+1}(x-x_i)\bra{0}\mathcal{T}\{\hat{O}_1(x_1) \ldots, \Delta \hat{O}_i(x_i), \ldots, \hat{O}_n(x_n)\}\ket{0}
+\end{equation}
+i.e. the the current operator is conserved inside correlation functions, save for contact terms, i.e. at coincident points/locations of operator insertions. There, it measures the charge of the operators. The above equation holds completely non-perturbatively for any QFT (i.e. for free and interacting theories alike). The identity relates $n+1$-point functions to $n$-point functions. Note that the $\hat{O}_i$ can be fundamental fields like $\hat{\phi}_a$, but also can be composite fields, for example $\hat{\phi}_a\hat{\phi}_b^2 \p_\mu \phi_c$ etc. The $\Delta \hat{O}_i$ appearing in the expression above is the transformation under the infinitesimal symmetry:
+\begin{equation}
+    \hat{\phi}_a \to \hat{\phi}_a' = \hat{\phi}_a + \alpha \Delta \hat{\phi}_a
+\end{equation}
+\begin{equation}
+    \hat{O}_i[\hat{\phi}_a] \to \hat{O}_i'[\hat{\phi}_a] = \hat{O}_i[\hat{\phi}_a] + \alpha \Delta \hat{O}_i
+\end{equation}
+This is all pretty abstract, so let's consider our example of last class of 2 scalar fields with $O(2)$ symmetry:
+\begin{subequations}
+    \begin{align}
+        \phi_1 &\to \phi_1 + \alpha \phi_2
+        \\ \phi_2 &\to \phi_2 - \alpha \phi_1
+    \end{align}
+\end{subequations}
+where $\Delta \phi_1 = \phi_2, \Delta \phi_2 = \phi_1$. We consider the composite operator:
+\begin{equation}
+    O = (\phi_1)^2 \phi_2 \to (\phi_1 + \alpha\phi_2)^2(\phi_2 - \alpha \phi_1) \approx \phi_1^2 \phi_2 + 2\alpha\phi_1\phi_2\phi_2 - \alpha \phi_1 \phi_2 \phi_1
+\end{equation}
+so then:
+\begin{equation}
+    \Delta O = 2\phi_1 \phi_2^2 - \phi_1^2 \phi_2
+\end{equation}
+With the setting clear, we move onto the proof of the Ward identity.
+
+\subsection{Proof of Ward Identities}
+The time-ordered $n$-point function of $O_i$s is given by the path integral:
+\begin{equation}
+    \avg{\mathcal{T}\{O_1(x_1)\ldots O_n(x_n)\}} = \int \mathcal{D}\phi_a O_1[\phi_a(x_1)] \ldots O_n[\phi_a(x_n)]e^{iS[\phi_a]}
+\end{equation}
+We make a change of variable in the path integral, inspired by Noether's theorem. In particular, we change from $\phi_a \to \phi_a' = \phi_a + \alpha(x)\Delta \phi_a$. We assume that the Jacobian of the transformation is one, which is the case for the symmetries we have studied thus far. Then:
+\begin{equation}
+    \begin{split}
+        \avg{\mathcal{T}\{O_1(x_1)\ldots O_n(x_n)\}} &= \int \mathcal{D}\phi_a'O_1[\phi_a(x_1)]\ldots O_n[\phi_a(x_2)] e^{iS[\phi_a]}
+        \\ &= \int \mathcal{D}\phi_a'O_1[\phi_a'(x_1) - \alpha \Delta \phi_a]\ldots O_n[\phi_a'(x_n) - \alpha \Delta \phi_a] e^{iS[\phi_a' - \alpha \Delta \phi_a]}
+        \\ &= \int \mathcal{D}\phi_a' (O_1[\phi_a'] - \alpha(x_1)\Delta O_1)\ldots (O_n[\phi_a'] - \alpha(x_n)\Delta O_n)e^{iS[\phi_a'] - i\int \alpha(x) \p_\mu j^\mu}
+    \end{split}
+\end{equation}
+Now, let's expand this expression to linear order in $\alpha$. We get the zeroth order term (i.e. the $\alpha = 0$ term) and then in the linear order term we have that a single $\alpha$ survives per term (we discard terms quadratic in $\alpha$ and higher), keeping in mind that we also get one term from the $\alpha$ in the action:
+\begin{equation}
+    \begin{split}
+        \avg{\mathcal{T}\{O_1(x_1)\ldots O_n(x_n)\}} &= \int \mathcal{D}\phi_a' O_1[\phi_a'] \ldots O_n[\phi_a'] e^{iS[\phi_a']} 
+        \\ &- \sum_{i=1}^n\alpha(x_i)\int \mathcal{D}\phi_a'O_1(\phi_a') \ldots \Delta O_i[\phi_a'] \ldots O_n[\phi_a'] e^{iS[\phi_a']}
+        \\ &- i\int \mathcal{D}\phi_a' O_1[\phi_a']\ldots O_n[\phi_a']\left(\int d^{d+1}x \alpha(x)\p_\mu j^\mu(x)\right)e^{iS[\phi_a']}
+    \end{split}
+\end{equation}
+Now; the zeroth order term is literally the time-ordered $n$-point function, so we cancel them out on both sides. The two remaining terms must be equal and opposite. Thus, rearranging and using that the path-integral gives us the expectation values (and interchanging the order of the path integral, the derivative, and the spacetime integral in the last term), we obtain:
+\begin{equation}
+    -i\int d^{d+1}x \alpha(x) \p_{x^\mu}\avg{T\{j^\mu(x)O_1(x_1)\ldots O_n(x_n)\}} = \sum_{i=1}^n \alpha(x_i)\avg{\mathcal{T}\{O_1(x_1)\ldots \Delta O_i(x_i)\ldots O_n(x_n)\}}
+\end{equation}
+Since this must be true for all $\alpha$, taking the functional derivative of the above w.r.t. $\alpha$ (i.e. $\fd{}{\alpha(y)}$) and using that $\fd{\alpha{x}}{\alpha(y)} = \delta^{d+1}(x-y)$, we obtain:
+\begin{equation}
+    -i\p_{y^\mu}\avg{T\{j^\mu(y)O_1(x_1)\ldots O_n(x_n)\}} = \sum_{i=1}^n \delta^{d+1}(y - x_i)\avg{\mathcal{T}\{O_1(x_1)\ldots \Delta O_i(x_i)\ldots O_n(x_n)\}}
+\end{equation}
+which is the desired identity. In PS5, we will explore this identity for the case of the complex scalar field, where we will verify:
+\begin{equation}
+    \p_{x^\mu}\avg{\mathcal{T}\{j^\mu(x)\Phi^*(x_1)\Phi(x_2)\}} = i\delta(x - x_1)\avg{\mathcal{T}\{(-i)\Phi^*,\Phi\}} + i\delta(x - x_2)\avg{\mathcal{T}\{\Phi^*,i\Phi\}}
+\end{equation}

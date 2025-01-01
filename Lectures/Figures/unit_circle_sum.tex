@@ -1,0 +1,21 @@
+\documentclass[tikz, border=5mm]{standalone}
+\begin{document}
+\begin{tikzpicture}
+    % Draw the circle
+    \draw (0,0) circle (2cm);
+    \draw[latex-latex] (-3, 0) -- (3, 0);
+    \draw[latex-latex] (0, -3) -- (0, 3);
+
+    \filldraw[fill=black] (2, 0) circle (2pt);
+    \node[above] at (2.25, 0) {$e^{i0}$};
+    \filldraw[fill=black] (1.414, 1.414) circle (2pt);
+    \node[above] at (1.8, 1.414) {$e^{i2\pi/M}$};
+    \filldraw[fill=black] (0, 2) circle (2pt);
+    \filldraw[fill=black] (-1.414, 1.414) circle (2pt);
+    \filldraw[fill=black] (-2, 0) circle (2pt);
+    \filldraw[fill=black] (-1.414, -1.414) circle (2pt);
+    \filldraw[fill=black] (0, -2) circle (2pt);
+    \filldraw[fill=black] (1.414, -1.414) circle (2pt);
+    \node[below] at (1.8, -1.414) {$e^{-i2\pi/M}$};
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,230 @@
+\section{Lorentz Invariance Part 2, Transforming Fields}
+
+\subsection{Inverses of Lorentz Transformations}
+Recall the Lorentz transformations:
+\begin{equation}
+    X^\mu \to X'^\mu  = \Lambda^\mu_\nu X^\nu
+\end{equation}
+Which has the property of preserving spacetime distance:
+\begin{equation}
+    (X')^2 = X^2 = X^\mu X^\nu \eta_{\mu\nu}.
+\end{equation}
+Where $\eta = \text{diag}(-1, 1, 1, 1)$ is the Minkowski metric and $x^\mu = (x^0 = t, x^1, x^2, x^3)$. Thus they have the property:
+\begin{equation}
+    \eta_{\mu\nu}\Lambda^\mu_\alpha \Lambda^\nu_\beta = \eta_{\alpha\beta}
+\end{equation}
+or alternatively:
+\begin{equation}
+    \Lambda^T \eta \Lambda = \eta
+\end{equation}
+
+The Lorentz transformations form a group $O(1, 3)$, where $O$ stands for orthogonal. Last time we discussed the group axioms, one of which is that each group element has an inverse. Thus to conclude our argument about Lorentz transformations forming a group, for a given $\Lambda \in O(1, 3)$ let's find its inverse. To this end, we notice:
+
+\begin{equation}
+    \eta \Lambda^T \eta \Lambda = \eta(\eta) = \II
+\end{equation}
+thus:
+\begin{equation}
+    \Lambda^-1 = \eta \Lambda^T \eta.
+\end{equation}
+The inverse condition can also be phrased as:
+\begin{equation}
+    (\Lambda^{-1})^\mu_{\phantom{i}\nu} \Lambda^\nu_{\phantom{i}\lambda} = \delta^\mu_\lambda
+\end{equation}
+So the matrix elements are:
+\begin{equation}
+    (\Lambda^{-1})^\mu_{\phantom{i}\nu} = \eta^{\mu\alpha}\Lambda_{\phantom{i}\alpha}^\beta \eta_{\beta\nu}
+\end{equation}
+
+For more compact notation, it is often convenient to raise and lower indices using the Minkowski metric. For example:
+\begin{equation}
+    x_\mu = \eta_{\mu\nu}x^\nu.
+\end{equation}
+But be careful! Note that this means:
+\begin{equation}
+    x_\mu = (-t, x^1, x^2, x^3) \neq x^\mu.
+\end{equation}
+With this convention, we can write:
+\begin{equation}
+    (\Lambda^{-1})^{\mu}_{\phantom{i}\nu} = \Lambda_\nu^{\phantom{i}\mu}
+\end{equation}
+Note that Greek indices $\alpha, \beta, \mu, \nu$ we take to run from $0, \ldots, 3$ and regular letters $i, j, k, l$ we take to run from $1, \ldots, 3$ (spatial only).
+
+\subsection{Infinitesimal Lorentz Transformations}
+We consider infinitesimal versions of the Lorentz transformations; this makes the analysis more simple, and we can build up the finite versions from the infinitesimal ones. Thus, we consider:
+\begin{equation}
+    \Lambda = \II + \delta \omega
+\end{equation}
+thus:
+\begin{equation}
+    \Lambda^\mu_{\sp\nu} = \delta_\nu^\mu + \delta\omega^\mu_{\sp\nu}
+\end{equation}
+Thus for $\Lambda \in O(1, 3)$:
+\begin{equation}
+    \eta = \Lambda^T \eta \Lambda = (\II + \delta\omega^T)\eta(\II + \delta\omega) \approx \eta + \eta\delta\omega + \delta\omega^T \eta
+\end{equation}
+Thus:
+\begin{equation}
+    0 = (\eta\delta\omega)_{\mu\nu} + (\delta\omega^T\eta)_{\mu\nu} = \eta_{\mu\alpha}\delta\omega^\alpha_{\sp\nu} + \delta^\alpha_{\sp\mu}\eta_{\alpha\nu}.
+\end{equation}
+Let us define:
+\begin{equation}
+    \delta\omega_{\alpha\beta} = \eta_{\alpha\mu}\delta\omega^\mu_{\sp\beta}
+\end{equation}
+So then:
+\begin{equation}
+    0 = \delta\omega_{\mu\nu} + \delta\omega_{\nu\mu} \implies \delta\omega_{\mu\nu} = -\delta\omega_{\nu\mu} 
+\end{equation}
+i.e. the $\delta\omega$ matrix is antisymmetric! This might remind you of rotations; where the generators are antisymmetric. This tells us the general structure of infinitesimal Lorentz transformations; they are parametrized by antisymmetric matrices. Thus, the question of classifying Lorentz transformations becomes how many antisymmetric matrices they are.
+
+In $D = 2$, we have a single independent antisymmetric matrix (0s on the diagonal, $a$ on the off diagonal, and $-a$ on the other off diagonal), corresponding to a boost. In general for $D$ dimensions we have $\frac{D(D-1)}{2}$ independent antisymmetric matrices; this can be seen from the fact that the diagonals are always zero, and then the upper triangle of the matrix - of which there are $\frac{D(D-1)}{2}$ entries - specifies the matrix (the lower triangle is fixed by antisymmetry). In $D = 4$, this corresponds to 6 independent infinitesimal Lorentz transformations; 3 rotations and 3 boosts. In a flat world (i.e. $D = 3$) we have 3, corresponding to 1 rotation and 2 boosts.
+
+\subsection{Action of Symmetries - Representations}
+In a little while, we will consider QFTs that have these symmetries. We are thus interested in learning how these symmetries act on the states. In QM and QFT, symmetries act as unitary operators on the Hilbert space.
+
+For example, for a given Lorentz transformation $\Lambda$, there is a unitary operator $U(\Lambda)$ which acts on the Hilbert space, i.e.
+\begin{equation}
+    \ket{\psi} \to U(\Lambda)\ket{\psi}.
+\end{equation}
+where $U(\Lambda)^\dagger = U(\Lambda)^{-1}$. Alternatively, we can consider their action on operators:
+\begin{equation}
+    O \to U(\Lambda)^\dagger O U(\Lambda)
+\end{equation}
+This is a representation of the group symmetry, and this representation must be faithful. In particular:
+\begin{equation}
+    U(\Lambda_1)U(\Lambda_2) = U(\Lambda_1\Lambda_2)
+\end{equation}
+which implies:
+\begin{equation}
+    U(\II_G) = \II
+\end{equation}
+as well as:
+\begin{equation}
+    U(\Lambda)U(\Lambda^{-1}) = U(\II_G) = \II \implies U(\Lambda^{-1}) = U(\Lambda)^\dagger
+\end{equation}
+note that the $\II_G$ appearing in $(\cdot)$ is the identity group element, while the $\II$ appearing on the RHS is the identity operator. We drop the subscript as which is a group element/operator should be clear from context.
+
+% A general note; representations are a mathematical concept which are different ways a group can act. For example on coordinates, we have the vector representation $x^\mu \to \Lambda^{\mu}_\nu x^\nu$, the trivial representation $x^2 \to ... = x^2$, or the tensor representation $x^\mu x^\nu = \Lambda^\mu_\alpha \Lambda^\nu_\beta x^\alpha x^\beta$.
+
+For this course, we will generally consider faithful representations, though there are some cases where this is broken in a small way, e.g. up to a phase where $U(\Lambda_1)U(\Lambda_2) = U(\Lambda_1\Lambda_2)e^{i\alpha_{12}}$. 
+
+So, if we consider the unitary representation of the infinitesimal Lorentz transformations:
+\begin{equation}
+    U(\II + \delta\omega) = \II + \frac{i}{2}\delta\omega_{\mu\nu}\hat{M}^{\mu\nu}
+\end{equation}
+here, $\hat{M}$ is a Hermitian operator:
+\begin{equation}
+    (\hat{M}^{\mu\nu})^\dagger = \hat{M}^{\mu\nu}.
+\end{equation}
+In a QFT, we will make $\hat{M}$ out of $\hat{a}_k, \hat{a}_k^\dagger, \hat{\phi}$ etc. We can think of $\hat{M}$ as a matrix of operators, acting (here) on an infinite-dimensional Hilbert space.
+
+An observation; Lorentz transformations act on coordinates in a continuous way; so the only way to accommodate this is to have fields, which are infinite-dimensional.
+
+We now derive very general results about QFTs with Lorentz invariance. We consider:
+\begin{equation}\label{eq:transformedLorentztransform}
+    U(\Lambda)^{-1}U(\II + \delta \omega)U(\Lambda) = U(\Lambda^{-1}(\II + \delta\omega)\Lambda) = U(\II + \Lambda^{-1}\delta\omega\Lambda) = \II + \frac{i}{2}\delta\omega'_{\alpha\beta}\hat{M}^{\alpha\beta}
+\end{equation}
+Where we have notated $\delta\omega' = \Lambda^{-1}\delta\omega\Lambda$. Writing out its components:
+\begin{equation}
+    \delta\omega'^{\alpha}_{\sp\beta} = (\Lambda^{-1})^\alpha_{\sp\mu} \delta\omega^\mu_{\sp\nu}\Lambda^\mu_{\sp\beta} = \Lambda^{\sp\alpha}_{\mu}\delta\omega^\mu_{\sp\nu}\Lambda^\nu_{\sp\beta}
+\end{equation}
+Thus:
+\begin{equation}
+    \delta\omega'_{\alpha\beta} = \Lambda^\mu_{\sp\alpha}\Lambda^\nu_{\sp\beta}\delta\omega_{\mu\nu}
+\end{equation}
+On the other hand, if we work out the LHS of Eq. \eqref{eq:transformedLorentztransform}, we have:
+\begin{equation}
+    U(\Lambda)^{-1}\left(1 + \frac{i}{2}\delta\omega_{\mu\nu}\hat{M}^{\mu\nu}\right)U(\Lambda).
+\end{equation}
+Thus comparing the left and right hand sides:
+\begin{equation}\label{eq:LorentzonLorentz}
+    U(\Lambda)^{-1}\hat{M}^{\mu\nu}U(\Lambda) = \Lambda^\mu_{\sp\alpha}\Lambda^\nu_{\sp\mu}\hat{M}^{\alpha\beta}
+\end{equation}
+Thus we see that we have a collection/multiplet of six operators $\hat{M}^{\mu\nu}$ (the generators of the Lorentz group) that get shuffled by Lorentz transformations. Thus, we can say that the generators $\hat{M}^{\mu\nu}$ transform in a \emph{tensor representation} of the Lorentz group.
+
+\subsection{The Lorentz Algebra}
+So, we have started to understand how Lorentz symmetries act on themselves. The statements that follow from symmetry are very simple and universal (in contrast to a lot of things about QFT)... Let's push this a little bit more to get one more interesting property. Let's also take the symmetry $\Lambda$ to be infinitesimal:
+\begin{equation}
+    \Lambda = \II + \delta\omega
+\end{equation}
+thus learning how infinitesimal Lorentz transformations act on each other. Taking $\Lambda$ to be infinitesimal in Eq. \eqref{eq:LorentzonLorentz}, we have (to leading order) on the LHS:
+\begin{equation}
+    \left(\II - \frac{i}{2}\delta\omega_{\alpha\beta}\hat{M}^{\alpha\beta}\right)\hat{M^{\mu\nu}}\left(\II + \frac{i}{2}\delta\omega_{\alpha\beta}\hat{M}^{\alpha\beta}\right) \approx \hat{M}^{\mu\nu} - \frac{i}{2}\delta\omega_{\alpha\beta}[\hat{M}^{\alpha\beta}, \hat{M}^{\mu\nu}]
+\end{equation}
+where we note that the inverse of the infinitesimal transformation simply flips the sign of $i$. The RHS of Eq. \eqref{eq:LorentzonLorentz} gives:
+\begin{equation}
+    \left(\delta^\mu_\alpha + \delta\omega^\mu_{\sp\alpha}\right)\left(\delta^\nu_\beta + \delta\omega^\nu_{\sp\beta}\right)\hat{M}^{\alpha\beta} \approx \hat{M}^{\mu\nu} + \delta\omega^\mu_{\sp\alpha}\hat{M}^{\alpha\nu} + \delta\omega^{\nu}_{\sp\beta}\hat{M}^{\mu\beta} = \hat{M}^{\mu\nu} + \delta\omega_{\alpha\beta}\left(\eta^{\alpha\nu}\hat{M}^{\mu\beta} - \eta^{\mu\beta}\hat{M}^{\alpha\nu}\right)
+\end{equation}
+where we note the swap of indices causes the flip of the sign in the last $\hat{M}$ term due to antisymmetry.
+
+We want to now equate the two pieces; however note a small subtlety! $\delta\omega_{\alpha\beta}$ is \emph{not} a fully general matrix; it is a general \emph{antisymmetric} matrix, and thus places no constraint on the symmetric part of what it multiplies. So, we need to put the RHS expression into antisymmetric form via antisymmetrization:
+\begin{equation}\label{eq:Lorentzalgebra}
+    \boxed{[\hat{M}^{\alpha\beta}, \hat{M}^{\mu\nu}] = i\left(\eta^{\alpha\nu}\hat{M}^{\mu\beta} - \eta^{\mu\beta}\hat{M}^{\alpha\nu} - (\alpha \leftrightarrow \beta)\right)}
+\end{equation}
+where we note that the antisymmetric part of a matrix is given by $\frac{1}{2}(\text{itself} - (\alpha \leftrightarrow \beta))$.
+
+Our conclusion: \emph{any} QFT with Lorentz invariance will obey the Lorentz algebra. The boost generators are
+\begin{equation}
+    \hat{K}_i = \hat{M}^{i0}
+\end{equation}
+i.e. mix space and time, and the rotation generators are the $M$s that involve two spatial indices.
+\begin{equation}
+    \hat{J}_i = \frac{1}{2}\e_{ijk}\hat{M}^{jk}.
+\end{equation}
+The commutation relation between rotations and boosts are given by Eq. \eqref{eq:Lorentzalgebra}:
+\begin{equation}
+    [\hat{J}_i, \hat{K}_j] = \frac{1}{2}\e_{ikl}[\hat{M}^{kl}, \hat{M}^{j0}] = \frac{1}{2}\e_{ikl}\left(-\delta^{jl}\hat{M}^{k0} - (k \leftrightarrow l)\right) = -\e_{ikj}\hat{M}^{k0} = \e_{ijk}\hat{K}^k = 
+\end{equation}
+So, we see that boosts transform like vectors:
+\begin{equation}
+    [\hat{J}_1, \hat{K}_1] = 0
+\end{equation}
+\begin{equation}
+    [\hat{J}_1, \hat{K}_2] = i\hat{K}_3
+\end{equation}
+Similarly, the other commutation relations can be obtained:
+\begin{equation}
+    [\hat{J}_i, \hat{J}_j] = i\e_{ijk}\hat{J}_k
+\end{equation}
+which describe the group of rotations $SO(3)$ or $SU(2)$. The group of rotations is closed. The commutator of two boosts gives:
+\begin{equation}
+    [\hat{K}_i, \hat{K}_j] = -i\e_{ijk}\hat{J}_k
+\end{equation}
+which tells us that we cannot have a theory that is only invariant under boosts, we have to also include rotations.
+
+\subsection{Transformations of Scalar Fields}
+So, we have seen how we can classify objects according to their representation (i.e. how they transform under the group). We saw:
+\begin{itemize}
+    \item Scalar/trivial: $a \to a$ (e.g. $x^2 \equiv x^\mu x^\nu \eta_{\mu\nu}$)
+    \item Vector: $x^\mu \to x'^\mu = \Lambda^\mu_{\sp\nu}x^\nu$
+    \item Tensors: $x^\mu x^\nu, \hat{M}^{\mu\nu}$
+\end{itemize}
+but we now ask; how do fields $\phi(x^\mu)$ transform? The simplest reasonable possibility is that the fields do not transform, up to change in coordinates:
+\begin{equation}
+    \phi(x) \to \phi'(x') = \phi(x)
+\end{equation}
+For example, if we consider the temperature field $T(x)$ in a classroom, if we change coordinates then the temperature field should not change up to accounting for the coordinate transformation. In terms of Lorentz transformations:
+\begin{equation}
+    \boxed{\phi'(x) = \phi(\Lambda^{-1}x)}.
+\end{equation}
+This is the scalar field transformation. Note that after we have constructed a scalar field, we can then define composite fields, e.g. $O(x) = (\phi(x))^2$; indeed we see that this obeys the transformation law for a scalar field:
+\begin{equation}
+    O(x) \to O'(x) = \left[\phi'(x)\right]^2 = \left[\phi(\Lambda^{-1}x)\right]^2 = O(\Lambda^{-1}x).
+\end{equation}
+This will be the same for $\phi^3, \phi^4$ etc. This means the ``mass term'' in our simple scalar field Lagrangian from last lecture is a scalar field:
+\begin{equation}
+    \mathcal{L}_m =  \frac{1}{2}m^2\phi^2.
+\end{equation}
+Note that a scalar field is \emph{not} a scalar, but it instead describes the behaviour under transformations. Notably, the Lagrangian is not Lorentz invariant; however, the action \emph{is}:
+\begin{equation}
+    S = \int d^4x \mathcal{L}(x) \to \int d^4x \mathcal{L}'(x) \to  = \int d^4x\mathcal{L}(\Lambda^{-1}x) = \int d^4\tilde{x} \abs{\det\dod{x}{\tilde{x}}}\mathcal{L}(\tilde{x}) = \int d^4\tilde{x}\mathcal{L}(\tilde{x})
+\end{equation}
+where we note that:
+\begin{equation}
+    \det\dod{x}{\tilde{x}} = \abs{\det \Lambda} = 1
+\end{equation}
+as:
+\begin{equation}
+    \Lambda^T \eta \Lambda = \eta \implies \det \Lambda = \pm 1.
+\end{equation}
+This is why the action approach is so important; it is Lorentz invariant. The Hamiltonian formulation is not, as energy is not Lorentz invariant.

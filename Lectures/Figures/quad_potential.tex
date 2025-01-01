@@ -1,0 +1,19 @@
+\documentclass[tikz,border=5mm]{standalone}
+\begin{document}
+\begin{tikzpicture}
+    % Draw the axes
+    \draw[latex-latex] (-3,0) -- (3,0) node[right] {x};
+    \draw[-latex] (0,-1) -- (0,3) node[above] {V(x)};
+
+    % Draw the quadratic curve
+    \draw[thick, domain=-2.5:2.5, smooth, variable=\x, blue] plot (\x, {0.5*(\x)^2});
+
+    % Optional: Add labels or points
+    % \foreach \x in {-2, -1, 0, 1, 2} {
+    %     \fill[red] (\x, {(\x)^2}) circle (2pt);
+    % }
+
+    % Label the curve
+    %\node at (1.5, 2.5) {$U(x) = x^2$};
+\end{tikzpicture}
+\end{document}

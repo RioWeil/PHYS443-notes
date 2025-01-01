@@ -1,0 +1,160 @@
+\section{The Path Integral Formalism, Part 2}
+\subsection{Ground State Correlators}
+Last class, we showed the derivation of the time evolution as a path integral:
+\begin{equation}
+    \bra{q'}e^{-i\hat{H}t}\ket{q} = \lim_{N \to \infty}\int dq_1 \ldots dq_N \bra{q'}e^{-i\delta t\hat{H}}\ket{q_{N-1}} \ldots \bra{q_2}e^{-i\hat{H}\delta t}\ket{q_1}\bra{q_1}e^{-i\hat{H}\delta t}\ket{q} = \int_{q(0) = q}^{q(T) = q'}\mathcal{D}q e^{iS[q]}
+\end{equation}
+As well as how we can evaluate (time-ordered) correlation functions\footnote{An aside - path integrals always give us the time-ordered correlation functions, but these objects contain the information necessary to get other correlation functions.} using this machinery:
+\begin{equation}
+    \int_{q(0) = q}^{q(T) = q'} \mathcal{D}q q(t_1)q(t_2)\ldots e^{iS[q]} = \bra{q', T}\mathcal{T}\{\hat{Q}(t_1), \hat{Q}(t_2), \ldots \} \ket{q, 0}
+\end{equation}
+
+To connect this back to what we were doing previously, we are mostly interested in correlations in the ground state (which we will later see will be related to scattering amplitudes). So, today we will look at ground state correlators/excitations above the ground state. In this case, things simplify, as we will soon see. Rather than looking at:
+\begin{equation}
+    \bra{q', t_f}\hat{Q}(\bar{t})\ket{q, t_i} = \bra{q'}e^{-i\hat{H}(t_f - \bar{t})}\hat{Q}e^{-i\hat{H}(\bar{t} - t_i)}\ket{1} = \int_{q(t_i) = q}^{q(t_f) = q'}\mathcal{D}q e^{i\int_{t_i}^{t_f}dt L(q, t)}q(\bar{t})
+\end{equation}
+We would like to look at:
+\begin{equation}
+    \bra{0}\hat{Q}(\bar{t})\ldots \ket{0}.
+\end{equation}
+The issue; for most field theories (e.g. interacting field theories), we do not know what the ground state $\ket{0}$ is! But, we do know that (by definition) it is the lowest energy state. Let us focus on $e^{i\hat{H}t_i}\ket{q}$ factor. If we take $t_i \to -\infty(1 -i\e)$, then this factor will become $e^{iE_0 t_i}\ket{0}\braket{0}{q}$, i.e. only the contribution from the ground state will survive (to derive that expression explicitly, insert a complete basis of energy eigenstates, and see how all terms proportional to $e^{-\e\infty(E_i - E_0)} \to 0$ (unless $E_i = E_0$)). Doing the same on the bra, we consider $\bra{q'}e^{-i\hat{H}t_f}$ and send $t_f \to \infty(1 - i\e)$, again exponentially suppressing everything but the ground state, and giving $\braket{q'}{0}\bra{0}e^{-iE_0 t_f}$. The bottom line; up to some factors, we have:
+\begin{equation}
+    \bra{0}\mathcal{T}\{\hat{Q}(t_1), \hat{Q}(t_f)\}\ket{0} \propto \int \mathcal{D}q q(t_2)q(t_1)e^{i\int_{-\infty(1-i\e)}^{\infty(1-i\e)}dt L(q, t)}
+\end{equation}
+An interesting observation is that the boundary conditions no longer matter in the time dependence of the correlation! They only matter for the normalization, which we fix now. Let us set the norm of the vacuum to be one:
+\begin{equation}
+    \bra{0}\mathbb{I}\ket{0} = 1
+\end{equation}
+Which then tells us that:
+\begin{equation}
+    \bra{0}\mathcal{T}\{\hat{Q}(t_1), \hat{Q}(t_2)\}\ket{0} = \frac{\int \mathcal{D}q q(t_1)q(t_2)e^{i\int_{-\infty(1-i\e)}^{\infty(1-i\e)}dt L(q, t)}}{\int \mathcal{D}q e^{i\int_{-\infty(1-i\e)}^{\infty(1-i\e)}dt L(q, t)}}
+\end{equation}
+By looking at \emph{ratios} of path integrals, we don't have to worry about the factors that we had lying around. Srednicki says that by normalization fixing, we can choose the measure such the ``empty'' path integral in the denominator can be normalized to one, but this is a matter of convention. In any case, we now have a recipe for computing things in the path integral formalism! 
+
+From now on we drop the $ie$s in our notation, until we need to explicitly use them.
+
+\subsection{Generating Functionals}
+In some cases (e.g. the simple harmonic oscillator), instead of computing the correlation functions one by one, we can construct one general object - namely, the \emph{generating functional} - from which all of the correlation functions can be derived. Let us define:
+\begin{equation}
+    Z[f] = \int \D q e^{iS[q] + i\int dt f(t)q(t)}
+\end{equation} 
+By taking functional derivatives $\frac{\delta}{\delta f(t_1)}$, we can generate correlators involving $\hat{Q}(t_1)$. Let us study:
+\begin{equation}
+    \fd{}{f(t_1)}Z[f] = \int \D q e^{iS[q] + i\int dt f(t)q(t)}\fd{}{f(t_1)}[i\int dt f(t)q(t)].
+\end{equation}
+The functional derivative of a function w.r.t itself is just the delta function which fires only when the arguments are the same:
+\begin{equation}
+    \fd{f(t)}{f(t_1)} = \delta(t - t_1)
+\end{equation}
+so then the above becomes:
+\begin{equation}
+    \fd{}{f(t_1)}Z[f] = \int \D q (iq(t_1))e^{iS + i\int dt f(t)q(t)}
+\end{equation}
+Which is not quite what we want, but let us consider taking a ratio, and setting the source term to zero after taking the derivative:
+\begin{equation}
+    \left.\frac{1}{Z}\frac{1}{i}\fd{f(t_1)}Z\right|_{f = 0} = \frac{\int \D q q(t_1)e^{iS}}{\int \D q e^{iS}} = \bra{0}\hat{Q}(t_1)\ket{0}
+\end{equation}
+Let's now consider more derivatives!
+\begin{equation}
+    \left.\frac{1}{Z}\frac{1}{i}\fd{}{f(t_1)}\frac{1}{i}\fd{}{f(t_2)}Z[f]\right|_{f=0} = \frac{\int \D q q(t_1)q(t_2)e^{iS}}{\int \D q e^{iS}} = \bra{0}\mathcal{T}\{\hat{Q}(t_1), \hat{Q}(t_2)\}\ket{0}
+\end{equation}
+
+$Z[f]$ is a very rich object (a functional of a functional), which makes it generically hard to compute (but we can for free QFTs, and the harmonic oscillator). An observation; we can write the above formulas as:
+\begin{equation}
+    \left.\frac{1}{i}\fd{}{f(t_1)}\log Z[f]\right|_{f=0}
+\end{equation}
+For higher derivatives, we have:
+\begin{equation}
+    \left.\frac{1}{i}\fd{}{f(t_1)}\frac{1}{i}\fd{}{f(t_2)}\log Z[f]\right|_{f=0} = \frac{1}{i}\fd{}{f(t_2)}\frac{\int \D q q(t_1)e^{iS + i\int fq}}{Z[f]}
+\end{equation}
+Now that now there are two places where the functional derivative can hit. When it hits the numerator, we get a two-point function as before, when it hits the denominator, we get something that looks like a one-point function. Let's spell this out:
+\begin{equation}
+    \begin{split}
+        \left.\frac{1}{i}\fd{}{f(t_1)}\log Z[f]\right|_{f=0} &= \frac{\int \D q q(t_1)q(t_2)e^{iS}}{\int \D q e^{iS}} - \frac{\int \D q(t_1)e^{iS}}{Z[0]}\frac{\int \D q q(t_2)e^{iS}}{Z[0]}
+        \\ &= \bra{0}\mathcal{T}\{\hat{Q}(t_1), \hat{Q}(t_2)\}\ket{0} - \bra{0}\hat{Q}(t_1)\ket{0}\bra{0}\hat{Q}(t_2)\ket{0}
+        \\ &= \bra{0}\mathcal{T}\{\hat{Q}(t_1), \hat{Q}(t_2)\}\ket{0}_C
+    \end{split}
+\end{equation}
+where $Z[0] = \int \D q e^{iS}$. The object above is a connected correlator. Thus we say that $\log Z$ generates ``correlated'' correlation functions. Why is this important? Well, suppose $\hat{Q}$ was equal to 6 everywhere. Then the raw two-point function would just be $6^2 = 36$. Thus, looking at the connected correlation function removes this background, and actually tells us about the important correlations; this is intimately tied to covariance in probability theory. In the context of scattering, connected correlators tell us about nontrivial scattering processes.
+
+\subsection{Path Integral for the Harmonic Oscillator}
+The action for the simple harmonic oscillator is:
+\begin{equation}
+    S = \int dt \frac{1}{2}\dot{q}^2 - \frac{1}{2}mq^2
+\end{equation}
+Let's try to compute $Z$:
+\begin{equation}
+    Z[f] = \int \D q e^{iS + \int dt f(t)q(t)}
+\end{equation}
+Since we have time translation invariance, it will be convenient to study this object in frequency space. Let us define:
+\begin{equation}
+    q_\omega = \int dt e^{i\omega t}q(t)
+\end{equation}
+where the inverse fourier transform is then:
+\begin{equation}
+    q(t) = \int \frac{d\omega}{2\pi}e^{-i\omega t}q_\omega
+\end{equation}
+Plugging this into the action, we can perform the integral over $t$, then use the resulting delta functions to carry out one of the two $\omega$ integrals, and we end up with:
+\begin{equation}
+    S = \int \frac{d\omega}{2\pi}\frac{1}{2}(\omega^2 - m^2)q_\omega q_{-\omega}
+\end{equation}
+with $q_{-\omega} = q_\omega^*$. Now we study the source integral:
+\begin{equation}
+    \int dt f(t) q(t) = \int \frac{d\omega_1}{2\pi}\frac{d\omega_2}{2\pi}\int dt e^{-i(\omega_1 + \omega_2)t}f_{\omega_1}q_{\omega_2} = \int \frac{d\omega}{2\pi}f_\omega q_{-\omega} = \int \frac{d\omega}{2\pi}\frac{1}{2}\left(f_{\omega}q_{-\omega} + f_{-\omega}q_{\omega}\right)
+\end{equation}
+where we symmetrize in the last equality. We are now ready to compute the beast that is the functional integral. Spelling out the exponents, we have:
+\begin{equation}
+    Z[f] = \int \D q \exp(i\left[\int \frac{d\omega}{2\pi}\frac{1}{2}(\omega^2 - m^2)q_{\omega}q_{-\omega} + \frac{1}{2}(f_{\omega}q_{-\omega} + q_\omega f_{-\omega})\right])
+\end{equation}
+Now completing the square:
+\begin{equation}
+    Z[f] = \int \D q \exp(i\left[\int \frac{d\omega}{2\pi} \frac{1}{2}(\omega^2 - m^2)(q_\omega + \frac{1}{\omega^2 - m^2}f_\omega)(q_{-\omega}  + \frac{1}{\omega^2-m^2}f_{-\omega}) - \frac{1}{2}\frac{1}{\omega^2 - m^2}f_{\omega}f_{-\omega}\right])
+\end{equation}
+Let us shift our $q$ variable $q_\omega \to \bar{q}_\omega = q_\omega + \frac{1}{\omega^2 - m^2}f_\omega$. Then our path integral becomes:
+\begin{equation}
+    Z[f] = \int \D \bar{q}\exp(i\left[\frac{1}{2}\int \frac{d\omega}{2\pi}(\omega^2 - m^2)\bar{q}_\omega \bar{q}_{\omega}\right])\exp(-\frac{i}{2}\int \frac{d\omega}{2\pi}\frac{1}{\omega^2 - m^2}f_\omega f_{-\omega})
+\end{equation}
+Note that the path integral has decoupled from the source part! Since the first piece is just the generating functional without sources, so $Z[f]$ decouples to $Z[0]$ times a fairly simple functional of our source function:
+\begin{equation}
+    Z[f] = Z[0] \cdot  \exp(-\frac{i}{2}\int \frac{d\omega}{2\pi}\frac{1}{\omega^2 - m^2}f_\omega f_{-\omega})
+\end{equation}
+The logarithm is even simpler:
+\begin{equation}
+    \log Z[f] = -\frac{i}{2}\int \frac{d\omega}{2\pi}\frac{1}{\omega^2 - m^2}f_\omega f_{-\omega} \left(+ \log Z[0]\right)
+\end{equation}
+The $Z[0]$ part is independent of our probe $f$, so it is irrelavant for the calculation of our correlation functions - let's look at some of them now!
+\begin{equation}
+    \left.\fd{}{f}\log Z \right|_{f=0} = \bra{0}\hat{Q}(t_1)\ket{0} = 0
+\end{equation}
+We see this as we take the derivative of one of the $f$s, the other remains and gets set to zero, thus making the one-point function vanish. Let's now look at two-point functions, but first let's go back to the time domain:
+\begin{equation}
+    \log Z[f] = -\frac{i}{2} \int dtdt'\int \frac{d\omega}{2\pi}e^{i\omega(t - t')}\frac{1}{\omega^2 - m^2}f(t)f(t')
+\end{equation}
+Let us call the frequency integral above $G(t - t')$
+\begin{equation}
+    \log Z[f] = -\frac{i}{t}\int dtdt' G(t - t')f(t)f(t')
+\end{equation}
+Now looking at the connected correlation function (which is equal to the bare two-point function, since the one-point functions vanish):
+\begin{equation}
+    \begin{split}
+        \bra{0}\mathcal{T}\{\hat{Q}(t_1), \hat{Q}(t_2)\}\ket{0} &= \frac{1}{i}\fd{}{f(t_2)}\frac{1}{i}\fd{}{f(t_1)}\log Z
+        \\ &= \frac{1}{i}\fd{}{f(t_2)}\left(-\frac{1}{2}\right)\int dtdt' G(t-t')\fd{}{f(t_1)}(f(t)f(t'))
+        \\ &= \frac{1}{i}\fd{}{f(t_2)}\left(-\frac{1}{2}\right)\int dtdt' G(t-t')\left(\delta(t - t_1)f(t') + \delta(t' - t_1)f(t)\right)
+        \\ &= \frac{i}{2}\fd{}{f(t_2)}\left(\int dt' G(t_1 - t')f(t') + \int dt G(t - t_1)f(t)\right)
+    \end{split}
+\end{equation}
+Now we take the second derivative, which is easy, as there is only one $f$ to hit in each term:
+\begin{equation}
+    \begin{split}
+        \bra{0}\mathcal{T}\{\hat{Q}(t_1), \hat{Q}(t_2)\}\ket{0} &= \frac{i}{2}\left(G(t_1 - t_2) + G(t_2 - t_1)\right)
+    \end{split}
+\end{equation}
+Since $G$ is symmetric in its argument, we find:
+\begin{equation}
+    \bra{0}\mathcal{T}\{\hat{Q}(t_1), \hat{Q}(t_2)\}\ket{0} = iG(t_2 - t_1)
+\end{equation}
+Since the two-point function is just the Feynman's Green's function, we ave;
+\begin{equation}
+    G_F(t_2 - t_1) = iG(t_2 - t_1)
+\end{equation}
+On Thursday we evaluate this explicitly, and we will have to be careful about poles (we will see the return of the $i\e$s). We will then move onto free quantum field theories, where connected higher point functions are then easily computed.

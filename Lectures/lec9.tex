@@ -1,0 +1,217 @@
+\section{Noether's Theorem and Currents}
+
+\subsection{Motivation + Review of Symmetries and Correlation Functions}
+Today, we will change gears slightly and talk about a very general result in Quantum Field Theory; namely, Noether's Theorem. We will discuss operators known as currents, and we will discuss Ward Identities, which are a powerful consequence of Noether's theorem. These results will be true for any quantum field theory (they will be based on symmetries) - over the past few weeks, we've built up computational tools for doing perturbative calculations in specific QFTs, but the tools we develop today will be highly general. In fact, symmetries are one of the few non-perturbative tools in QFT.
+
+We've seen this manifest in our discussion of correlation functions; for example, the translation invariance implies that 2-point functions only depend on the difference of spacetime coordinates:
+\begin{equation}
+    \bra{0}\hat{\phi}(x^\mu_1)\hat{\phi}(x^\mu_2)\ket{0} = \bra{0}\hat{\phi}(x^\mu_1 - x^\mu_2)\ket{0}
+\end{equation}
+And Lorentz invariance tells us that the Wightman function only depends on the spacetime interval (a stronger result than depending on the $d+1$ differences of spacetime coordinates):
+\begin{equation}
+    G(x^\mu) = \bra{0}\hat{\phi}(x^\mu)\hat{\phi}(0)\ket{0} = G(x^2)
+\end{equation}
+We also saw that $\hat{\phi} \leftrightarrow -\hat{\phi}$ $\mathbb{Z}_2$ symmetry implies that odd $n$-point functions vanish:
+\begin{equation}
+    \bra{0}\hat{\phi}\ket{0} = \bra{0}\hat{\phi}^{2n+1}\ket{0} = 0.
+\end{equation}
+
+Today, we will see another consequence of symmetry; the existence of \emph{currents} $\hat{j}^\mu$, which are local operators satisfying a special property (Ward Identities). This whole chapter in our discussion of QFT will be highly general - it will not rely on the theory being free/Gaussian, or weakly interacting. We can have an arbitrarily complex quantum field theory, and so long as they have symmetries these results will apply! In Srednicki, the relevant sections are 22, 24.
+
+\subsection{Definition and Group Structure of Symmetries}
+When we discussed Lorentz invariance, we discussed how symmetries form a group. To generalize the discussion a little bit, we consider an action $S[\phi_a]$ for several scalar fields $\phi_a$ ($a = 1, 2, \ldots, N$). Let's assume that it is invariant under a transformation:
+\begin{equation}
+    \phi_a \to \phi_a'(\phi_b)
+\end{equation}
+i.e. the action for the transformed field is equal to the action for the original field:
+\begin{equation}
+    S[\phi_a'] = S[\phi_a]
+\end{equation}
+This is (the definition of) a symmetry of the theory.
+
+Such symmetries form groups, which means that (based on the group axioms):
+\begin{itemize}
+    \item The composition of two symmetries is a symmetry
+    \item There is an identity, namely the identity transformation $\phi_a' = \phi_a$
+    \item For each symmetry, there exists an inverse.
+\end{itemize}
+It's worth noting that it is a currently active field of research to extend this notion of symmetry beyond groups (so-called ``non-invertible'' or ``categorical'' symmetries), but for the purposes of this course we will consider symmetries with group structure only.
+
+Symmetries can be \emph{discrete} or \emph{continuous}. An example of the former is reflection symmetry, an example of the latter is translation. This is whether the group describing the symmetry is discrete or continuous. Continuous symmetries have infinitesimal versions, while discrete ones do not (this will have relevance later in our discussion of Noether's theorem). Symmetries can also be \emph{internal}, or \emph{spacetime}, which are symmetries that act on fields themselves vs. on the coordinates directly. This is pretty abstract, so let's go through examples.
+
+\subsection{Examples of Symmetry}
+\subsubsection*{$\phi^4$ scalar field theory}
+Consider the scalar $\phi^4$ theory, which we have seen previously:
+\begin{equation}
+    S[\phi] = \int d^4x \frac{1}{2}(\p\phi)^2 + \frac{1}{2}m^2\phi^2 + \lambda \phi^4
+\end{equation}
+This theory has lots of symmetries! One example is:
+\begin{equation}
+    \phi \to \phi' = -\phi.
+\end{equation}
+which is evidently a symmetry of the action $S[-\phi] = S[\phi]$ as it only depends on even powers of $\phi$. This (as our previous discussion) tells us that odd $n$-point functions vanish (even in highly interacting theories where such functions may be exceptionally difficult to compute)! This is a discrete, internal symmetry, with symmetry group $\mathbb{Z}_2 = \set{1, -1}$ where $1$ corresponds to the identity and $-1$ corresponds to flipping the sign of $\phi$. The group multiplication rules are very simple:
+\begin{equation}
+    1 \cdot 1 = -1 \cdot -1 = 1, \quad 1 \cdot -1 = -1 \cdot 1 = -1.
+\end{equation}
+This symmetry can be broken by introducing odd powers into the action, e.g. $\tilde{\lambda}\phi^3$.
+
+\subsubsection*{Two scalar fields}
+Consider an action with two scalar fields $\phi_{a=1,2}$. Consider the Lagrangian density:
+\begin{equation}
+    \mathcal{L} = -\frac{1}{2}(\p_\mu \phi_1)^2 - \frac{1}{2}m^2\phi_1^2 --\frac{1}{2}(\p_\mu \phi_2)^2 - \frac{1}{2}m^2\phi_2^2 = -\frac{1}{2}(\phi_\mu \phi_a)^2 - \frac{1}{2}m^2(\phi_a)^2
+\end{equation}
+with $\phi_a^2 = \phi_1^2 + \phi_2^2$. This theory is invariant under ``rotations'' of the fields (NOT a spacetime rotation - but considering a 2-D space in $\phi_1, \phi_2$ and rotating in this field space leaves the Lagrangian density \& action invariant). In more detail, consider the transformation:
+\begin{equation}
+    \m{\phi_1 \\ \phi_2} \to \m{\phi_1' \\ \phi_2'} = \m{\cos\theta & \sin\theta \\ -\sin\theta & \cos\theta}\m{\phi_1\\ \phi_2}
+\end{equation}
+From which we can verify that:
+\begin{equation}
+    \phi_1^2 + \phi_2^2 \to (\cos\theta\phi_1  + \sin\theta\phi_2)^2 +(-\sin\theta\phi_1  + \cos\theta\phi_2)^2 = (\phi_1^2 + \phi_2^2)(\cos^2\theta + \sin^2\theta) =  (\phi_1^2 + \phi_2^2).
+\end{equation}
+This is an internal (it acts on the fields, not on the spacetime coordinates), continuous ($\theta \in \RR$) symmetry. Let us consider the infinitesimal transformations for $\theta \ll 1$:
+\begin{subequations}
+    \begin{align}
+        \phi_1 \to \phi_1' &= \phi_1 + \theta\phi_2
+        \\ \phi_2 \to \phi_2' &= \phi_2 - \theta\phi_1
+    \end{align}
+\end{subequations}
+The group is $O(2) = SO(2) \times \ZZ_2$. The $SO(2)$ part corresponds to all transformations $O$ with $O^TO = 1, \det(O) = 1$ (i.e. the rotations parameterized by the matrix given above) and the $\ZZ_2$ part corresponds to reflections $\m{-1 & 0 \\ 0 & 1}$.
+
+Note that certain interactions preserve the symmetry: $\phi_1^4 + \phi_2^4$ does \emph{not} preserve the symmetry, as it is not rotationally invariant. But powers of $\phi_1^2 + \phi_2^2$ are rotationally invariant, and as such interactions of the form:
+\begin{equation}
+    \mathcal{L}_{\text{int}} = \lambda(\phi_1^2 + \phi_2^2)^2 = \lambda[\phi_a^2]^2
+\end{equation}
+will preserve the symmetries (and any implications thereof).
+
+Note that it is also possible to consider $\Phi = \phi_1 + i\phi_2$ and consider a complex scalar field.
+
+\subsubsection*{Massless scalar}
+When we consider the $m=0$ version of the scalar field theory, an additional symmetry emerges. The action is:
+\begin{equation}
+    S = -\int d^{d+1}x \frac{1}{2}(\p_\mu \phi)^2
+\end{equation}
+Namely, we see that there is a shift symmetry:
+\begin{equation}
+    \phi \to \phi' = \phi + c
+\end{equation}
+As the derivative kills the constant $c$ (the massive term does not have this shift symmetry)! An interaction that would preserve this symmetry would be:
+\begin{equation}
+    \mathcal{L}_{\text{int}} = \lambda[(\p_\mu \phi)^2]^2
+\end{equation}
+Note that this is a \emph{nonlinear} transformation of the fields. This is a continuous ($c \in \RR$) and internal (it acts on the fields) symmetry. The infinitesimal transformation is exactly the same as the full transformation, in this case!
+
+Note that the original action also has a scale symmetry $\phi \to \phi' = c\phi$, but this symmetry is much easier to break (and is broken by the interaction term we broke down). Scale symmetry is not a symmetry of nature, but we will return to it when we discuss the renormalization group - it is a useful organizational principle.
+
+\subsubsection*{Spacetime symmetries}
+Note that all three of the examples we discussed above are also invariant under:
+\begin{itemize}
+    \item Translations $\phi(x^\mu) \to \phi'(x^\mu) = \phi(x^\mu + a^\mu)$
+    \item Lorentz $\phi(x) \to \phi'(x) = \phi(\Lambda^{-1}x)$.
+\end{itemize}
+These are continuous spacetime symmetries (both are parameterized by a continuous parameter, e.g. $a^\mu$ for translations, or rotation/boost parameters for Lorentz transformations). There also exist discrete spacetime symmetries:
+\begin{itemize}
+    \item Time reversal $\phi \to \phi'(t, x_1, x_2, x_3) = \phi(-t, x_1, x_2, x_3)$
+    \item Reflection $\phi \to \phi'(t, x_1, x_2, x_3) = \phi(t, -x_1, x_2, x_3)$
+\end{itemize}
+
+\subsection{Noether's Theorem}
+For the rest of the discussion, we focus on continuous symmetries. These are more powerful (perhaps not surprising, because there is an uncountably infinite number of them) than discrete symmetries. Continuous symmetries have generators (e.g. $\hat{P}_\mu = (H, \v{P}), \hat{J}_{\mu\nu}$) which satisfy an algebra and generate infinitesimal transformations on quantum fields (for example, $H$ generates time translation, $\v{P}$ spatial translations, $\hat{J}$ rotations).
+
+Noether's theorem is extremely simple to prove, but will have far-reaching consequences. Consider an action $S[\phi]$ invariant under a continuous symmetry, with infinitesimal transformation with parameter $\alpha \ll 1$:
+\begin{equation}
+    \phi_a(x) \to \phi_a'(x) = \phi_a(x) + \alpha \Delta \phi_a(x).
+\end{equation}
+For example in the $O(2)$ QFT, we had:
+\begin{subequations}
+    \begin{align}
+        \phi_1 \to \phi_1' &= \phi_1 + \theta\phi_2
+        \\ \phi_2 \to \phi_2' &= \phi_2 - \theta\phi_1
+    \end{align}
+\end{subequations}
+so here $\theta = \alpha$ and $\Delta\phi_1 = \phi_2$, $\Delta \phi_2 = -\phi_1$.
+
+Consider performing an infinitesimal spacetime-dependent (global) transforamtion:
+\begin{equation}
+    \phi_a(x) \to \phi_a'(x) = \phi_a(x) + \alpha(x)\Delta\phi_a(x).
+\end{equation}
+This is no longer a symmetry:
+\begin{equation}
+    \delta S = S[\phi'_a] - S[\phi_a] \neq 0
+\end{equation}
+But when $\alpha$ is a constant, this variation must vanish! (because then it is a symmetry). Thus, the $\delta S$ above must proportional to \emph{derivatives} of $\alpha$. In other words, we have:
+\begin{equation}
+    \delta S = \int d^{d+1}x \p_\mu \alpha(x) j^\mu(\phi(x)).
+\end{equation}
+Note that the $\mu$ contraction makes this look related to Lorentz invariance, but this statement is true even if we are not discussing Lorentz transformations. What do we learn from this fact? Integrating by parts (and discarding the total derivative/boundary term)\footnote{Note that we can modify the derivation here to not discard the boundary term - then we would include a term to correspond to the current flowing in/out of the boundary. Also, note that in principle we could have higher order derivatives of $\alpha$ and thus currents.}:
+\begin{equation}
+    \delta S = -\int d^{d+1}\alpha \p_\mu(x) j^\mu(\phi(x)).
+\end{equation}
+What does this tell us? When the fields satisfy the equations of motion, then $\delta S = 0$. Therefore, since $\alpha$ is an arbitrary function of $x$, the thing it multiplies must vanish, i.e.:
+\begin{equation}
+    \boxed{\p_\mu j^\mu = 0}
+\end{equation}
+In other words, the presence of symmetries implies the conservation of current densities $j^\mu$. We now go through examples of these. Out of these, one can construct conserved charges by integrating over space the charge density.
+\begin{equation}
+    Q = \int d^dx j^0
+\end{equation}
+This is conserved from the continuity relation:
+\begin{equation}
+    \p_t Q = \int d^d x \p_0 j^0 = \int d^dx (-\p_i j^i) = 0
+\end{equation}
+where in the last equality we use that the integral over space of a total derivative vanishes. This is a more powerful version of what you may have already seen in quantum mechanics. Note that when we study quantum electrodynamics, this will actually be the charge and current densities that we expect.
+
+\subsection{Noether's Theorem applied to the Massless Scalar}
+Let's look at the interacting version of the massless scalar field:
+\begin{equation}
+    S = -\int d^{d+1}x \frac{1}{2}(\p_\mu \phi)^2 + \frac{\lambda}{4}[(\p_\mu \phi)^2]^2.
+\end{equation}
+Let's get the equation of motion by setting $\delta S = 0$:
+\begin{equation}
+    \delta S = 0 = -\int d^{d+1}x \p_\mu \phi \p^\mu \delta \phi + \lambda (\p_\mu \phi)^2 \p_\mu \phi \p^\mu \delta \phi
+\end{equation}
+Integrating by parts and saying that the fields vanish at $\pm \infty$ to isolate $\delta \phi$:
+\begin{equation}
+    \delta S = 0 = \int d^{d+1}x \delta\phi(\p_\mu \p^\mu \phi + \lambda \p_\mu(\p^\mu \phi(\p_\nu \phi)^2)) \implies \square \phi + \lambda \p_\mu (\p^\mu \phi(\p_\nu \phi)^2) = 0
+\end{equation}
+This theory also has a shift symmetry, as we previously discussed. Let's find the associated current. The Noether algorithm is as follows. We perform $\phi(x) \to \phi(x) + \alpha\phi(x)$ with $\alpha \ll 1$ and see what happens (let's check the statement in the theorem that $\delta S$ will be proportional to the derivative):
+\begin{equation}
+    \delta S = -\int d^{d+1}x \p_\mu \phi \p^\mu \alpha + \lambda(\p_\nu \phi)^2 \p_\mu \phi \p^\mu \alpha = -\int d^{d+1}x j^\mu \p_\mu \alpha
+\end{equation}
+so we see that the variation is indeed proportional to the derivative of alpha, and we identify:
+\begin{equation}
+    j^\mu = \p^\mu \phi + \lambda(\p_\nu \phi)^2 \p^\mu \phi
+\end{equation}
+Let's check that $j^\mu$ is conserved!
+\begin{equation}
+    \p_\mu j^\mu = \p_\mu(\p^\mu \phi + \lambda(\p_\nu \phi)^2 \p^\mu \phi) = \square \phi + \lambda \p_\mu((\p_\nu \phi)^2 \p^\mu \phi) = 0
+\end{equation}
+Note that here the current conservation is equivalent to the equation of motion. The more general statement from Noether's theorem is that the equation of motion implies current conservation (but not the other way around), current conservation is a slightly weaker statement.
+
+In real life, this QFT describes superfluids, e.g. Helium-3, where the conserved current here is the supercurrent.
+
+\subsection{Translation Invariance and the Energy-Momentum Tensor}
+We won't be able to finish this example today, but we will start it - it is very important. The current that we get we will call the energy-momentum tensor.
+
+Any action of the form:
+\begin{equation}
+    S[\phi] = \int d^{d+1}\mathcal{L}(x)
+\end{equation}
+with $\mathcal{L}(\phi_a(x), \p_\mu \phi, (\p_\mu \phi)^2, \ldots)$ is invariant under:
+\begin{equation}
+    \phi(x^\mu) \to \phi'(x^\mu) = \phi(x^\mu + \alpha^\mu).
+\end{equation}
+
+Indeed:
+\begin{equation}
+    S' = \int d^{d+1}\mathcal{L}(\phi_a'(x), \p\phi_a'(x), \ldots) = \int d^{d+1}x \mathcal{L}(\phi_a(x + \alpha), \p \phi_a(x + \alpha), \ldots) = \int d^{d+1}\tilde{x} \mathcal{L}(\phi_a(\tilde{x}), \p \phi_a(\tilde{x}), \ldots) = S
+\end{equation}
+where in the third equality we consider a transformation $x + \alpha = \tilde{x}$, where the Jacobian is trivial.
+
+Infinitesimally, this transformation is:
+\begin{equation}
+    \phi(x) \to \phi'(x) \approx \phi(x) + \alpha^\mu \p_\mu \phi(x)
+\end{equation}
+where here the $\p_\mu \phi(x)$ is the $\Delta_\mu \phi$. We have $d+1$ symmetries here. When $\alpha^\mu$ is a constant, we have a symmetry. On Thursday, we will make $\alpha^\mu$ depend on spacetime. We then will find Noether currents for each of the $d+1$ spacetime dimensions, and obtain the energy momentum tensor:
+\begin{equation}
+    \boxed{j^{\mu(\nu)} = T^{\mu\nu}}
+\end{equation}

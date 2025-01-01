@@ -1,0 +1,146 @@
+\section{The Path Integral Formalism}
+We could now go on from what we have used to explore how QFT can make experimental predictions - but, instead we will take a step back and explore the path integral formalism, which is a deep and widely applicable mathematical framework to understand QFT (and other fields).
+
+\subsection{Motivating the Path Integral}
+Let us return to the single particle:
+\begin{equation}
+    \hat{H} = \frac{\hat{P}^2}{2M} + V(\hat{Q})
+\end{equation}
+at position $q$ at time $0$ and $q'$ at time $T$. Classically, we could solve for the trajectory $q_{cl}(t)$ by solving $\delta S = 0$ subject to the boundary conditions.
+
+Quantum mechanically, the procedure is quite different. We would instead compute the matrix elements:
+\begin{equation}
+    P(q' \text{ at time $T$}) = \abs{\bra{q'}e^{-i\hat{H}T}\ket{q}}^2
+\end{equation}
+This doesn't really seem like it has to do anything with the classical method of solving this same problem. On the other hand, we know that classical physics emerges from quantum physics - classical mechanics should be the limit of QM as $\hbar \to 0$. And this classical limit is indeed made clear in the path integral approach to QM. We will see that the above amplitude is related to $e^{iS[q_{cl}(t)]}$.
+
+Advantages of the path integral formalism include:
+\begin{itemize}
+    \item It makes the semiclassical limit of QM manifest
+    \item It involves the action $S$ rather than the Hamiltonian $\hat{H}$ (This is particularly nice from the perspective of QFT, as the action allows for Lorentz invariance to be much more easily imposed, as the action is a scalar; conversely the Hamiltonian is a four-vector, and choosing a time coordinate breaks L.I.)
+    \item Streamlined calculations (e.g. correlation functions - you will see how it is possible, but tedious, to do these calculations in the ``old-fashioned'' approach, but the path integral formalism makes these much easier). Specifically, we will be computing lots of Gaussian integrals.
+    \item Connections to statistical mechanics. In stat mech, we consider finite temperature fluctuations and weighing all possible field distributions weighted by their probability. This allows us to probe classical many-body physics, phase transitions etc. The path integral approach lends itself very nicely to this.
+    \item Topological aspects of QFT/QM.
+\end{itemize}
+And there are no negatives. Just kidding. One drawback is a mathematically precise definition is difficult. But, this could be seen as a strength - the path integral gave hints towards things that were very hard to prove formally, but laid the groundwork/intuition for hard results.
+
+\subsection{``Deriving'' the Path Integral}
+Consider again the transition:
+\begin{equation}
+    \bra{q'}e^{-i\hat{H}T}\ket{q}.
+\end{equation}
+Subdivide $T$ into $N$ steps $\delta t = \frac{T}{N}$. Then:
+\begin{equation}
+    \bra{q'}e^{-i\hat{H}T}\ket{q} = \bra{q'}e^{-i\hat{H}\delta t} \ldots e^{-i\hat{H}\delta t} e^{-i\hat{H}\delta t}\ket{q}
+\end{equation}
+Now, we insert the resolution of the identity:
+\begin{equation}
+    \II = \int dq_i \dyad{q_i}{q_i}
+\end{equation}
+in between each of the exponentials. Then:
+\begin{equation}
+    \bra{q'}e^{-i\hat{H}T}\ket{q} = \int dq_1 \ldots dq_{N-1}\bra{q'}e^{-i\hat{H}\delta t}\ket{q_{N-1}}\bra{q_{N-1}}\ldots \ket{q_2}\bra{q_2}e^{-i\hat{H} \delta t}\ket{q_1}\bra{q_1}e^{-i\hat{H} \delta t}\ket{q}
+\end{equation}
+This handles nicely the $V(\hat{Q})$ term in the Hamiltonian. Now, we also insert:
+\begin{equation}
+    \II = \int \frac{dp_i}{2\pi} \dyad{p_i}{p_i}
+\end{equation}
+in each matrix element. We then have:
+\begin{equation}
+    \int \frac{dq_1 \ldots dq_{N-1}dp_1 \ldots dp_N}{(2\pi)^N} \braket{q'}{p_N} \bra{p_N}e^{-i\hat{H} \delta t}\ket{q_{N-1}}\ldots \braket{q_2}{p_2}\bra{p_2}e^{-i\hat{H} \delta t}\ket{q_1}\braket{q_1}{p_1}\bra{p_1}e^{-i\hat{H} \delta t}\ket{q}
+\end{equation}
+Now we can compute all of these factors! We have a bunch of $\braket{q}{p}$ factors, which is just the wavefunction of the momentum eigenstate:
+\begin{equation}
+    \braket{q}{p} = e^{iqp}.
+\end{equation}
+A quick way to remember this is:
+\begin{equation}
+    \p_q \psi_q(q) = \p_q\braket{q}{p} = \bra{q}i\hat{p}\ket{p} = ip\braket{q}{p} \implies \braket{q}{p} = e^{iqp}.
+\end{equation}
+For the other factors, we expand the exponentials, and use the fact that we have both a position and momentum eigenstate it can act on (from the left and right):
+\begin{equation}
+    \bra{p}e^{-i\hat{H}\delta t}\ket{q} \approx \bra{q}\left(1 - i\hat{H}(\hat{Q}, \hat{P})\delta t\right)\ket{p} = \braket{q}{p}\left(1 - iH(p, q)\delta t\right) = e^{-iqp}\left(1 - iH(p, q)\delta t\right) \approx e^{-ipq - iH(p, q)\delta t}
+\end{equation}
+We thus have the expression for the transition amplitude:
+\begin{equation}
+    \bra{q'}e^{-i\hat{H}T}\ket{q} = \int dq_1 \ldots dq_{N-1}\prod_{i=1}^N \int \frac{dp_i}{2\pi}\braket{q_i}{p_i}\bra{p_i}e^{-i\hat{H}\delta t}\ket{q_{i-1}}
+\end{equation}
+where $q_0 = q$ and $q_N = q'$. Now we apply the two calculations we did:
+\begin{equation}
+    \begin{split}
+        \bra{q'}e^{-i\hat{H}T}\ket{q} &= \int dq_1 \ldots dq_{N-1}\prod_{i=1}^N \int \frac{dp_i}{2\pi} e^{iq_ip_i}e^{-iq_{i-1}p_i - iH(p_i, q_{i-1})\delta t}
+        \\ &= \int dq_1 \ldots dq_{N-1}\prod_{i=1}^N \int \frac{dp_i}{2\pi} \exp(ip_i(q_i - q_{i-1}) - i\delta t \frac{p_i^2}{2M} - i\delta t V(q_{i-1}))
+        \\ &= \int dq_1 \ldots dq_{N-1}\prod_{i=1}^N \int \frac{dp_i}{2\pi} \exp(-i\delta t \frac{1}{2M}(p_i - \frac{M}{\delta t}(q_i - q_{i-1}))^2 + \frac{i}{2}\frac{M}{\delta t}(q_i - q_{i-1})^2 - i\delta t V(q_{i-1}))
+        \\ &= \int dq_1 \ldots dq_{N-1}\prod_{i=1}^N \int \frac{d\tilde{p}_i}{2\pi} \exp(-i\delta t\frac{\hat{p}_i^2}{2m})\exp(\frac{i}{2}\frac{M}{\delta t}(q_i - q_{i-1})^2 - i\delta t V(q_{i-1}))
+    \end{split}
+\end{equation}
+where in the third equality we have completed the square, and in the fourth equality we have changed variables to $\tilde{p}_i = p_i - \frac{M}{\delta t}(q_i - q_{i-1})$. Carrying out the $\tilde{p}$ integral, we just get a constant $C$ that it independent of the $q$s, so:
+\begin{equation}
+    \begin{split}
+        \bra{q'}e^{-i\hat{H}T}\ket{q} &= C^N\int dq_{1}\ldots dq_N \prod_{i=1}^N \exp(\frac{i}{2}\frac{M}{\delta t}(q_i - q_{i-1})^2 - i\delta t V(q_{i-1}))
+        \\ &= C^N \int_{q_0=q, q_N = q'}dq_0 \ldots dq_N\exp(\sum_{i=1}^N\left[\frac{i}{2}\frac{M}{\delta T}(q_i - q_{i-1})^2 - i\delta tV(q_{i-1})\right])
+    \end{split}
+\end{equation}
+We are left with an integral over coordinates, which we can interpret as an integral over all possible intermediate values of the coordinates. The $N \to \infty$ limit of this expression now yields the path integral. In this limit, $dt \sum_i \to \int dt$. Also, $\frac{q_{i} - q_{i-1}}{\delta t} \to \dot{q}$. Thus, taking the limit:
+\begin{equation}
+    \bra{q'}e^{-i\hat{H}T}\ket{q} = \tilde{C}\int \mathcal{D}q\exp(i\int_0^T dt\frac{1}{2}M\dot{q}^2 - V(q))
+\end{equation}
+We observe that what we integrate in the exponential is just the classical action:
+\begin{equation}
+    \bra{q'}e^{-i\hat{H}T}\ket{q} = \tilde{C}\int \mathcal{D}q\exp(i\int_0^T dt \mathcal{L}(q, \dot{q})) = \tilde{C}\int \mathcal{D}q \exp(iS[q, \dot{q}])
+\end{equation}
+Thus, the transition amplitude is simply the sum over all trajectories, weighed by a phase equal to the integral over the classical action.
+
+In semiclassical situations, we have $S \gg \hbar = 1$. This makes extrema of the action highly important; since the action is very large, the action widely oscillates for most trajectories. But, around the classical solutions/trajectories, the phase does not vary widely (and thus the phases do not cancel), hence the path integral is dominated by trajectories very close to the classical trajectory, allowing us to recover classical physics. This is true qualitatively, and can be seen explicitly in some models, e.g. the quantum harmonic oscillator for large occupation numbers. In particle physics, we are usually not interested in semiclassical situations. We look around $\phi \approx 0$, which is a highly quantum limit. But if we hit the crystal for example, causing macroscopic osciallations, then $\phi$, and $S$ become large and we recover classical physics.
+
+Question; how do we know this weird, infinite-dimensional measure preserves the symmetries we care about? The answer is it does not, always. This is how anomalies manifest at the quantum level.
+
+\subsection{Computing Correlators with Path Integrals}
+We start with a slightly different correlator than the one we discussed last lecture:
+\begin{equation}
+    \bra{q', T}\hat{Q}(t_1)\ket{q, 0}
+\end{equation}
+This is a one-point function; we see how to treat this with path integrals before moving onto more complicated examples. We write the above as:
+\begin{equation}
+    \bra{q'}e^{-i\hat{H}(T-t_1)}\hat{Q}e^{-i\hat{H}t_1}\ket{q}
+\end{equation}
+Following the same procedure as previous, we slice up time $T = N\delta$ and $t_1 = n\delta t$, and we get:
+\begin{equation}
+    \int dq_1 \ldots dq_{N-1}\bra{q'}e^{-i\hat{H}t}\ket{q_{N-1}}\ldots \bra{q_n}\hat{Q}e^{-i\hat{H}\delta t}\ket{q_{n-1}}\ldots \bra{q_1}e^{-i\hat{H}\delta t}\ket{q}
+\end{equation}
+so up to the $q_n$ factor,we have the same set of integrals as before, and in the continuum limit this appears as $q(t_1)$:
+\begin{equation}
+    \bra{q', T}\hat{Q}(t_1)\ket{q, 0} = \int \mathcal{D}q\; q(t_1)e^{iS[q, \dot{q}]}
+\end{equation}
+More generally, the one point function of $O(\hat{P}, \hat{Q})(t_1)$ amounts to the replacement with the number $O(p(t_1), q(t_1))$ inside the path integral.
+
+What about two-point functions? They are slightly more interesting. A reasonable assumption would be that we get two of these factors. Lets work this out if $t_2 > t_1$:
+\begin{equation}
+    \bra{q', T}\hat{Q}(t_2)\hat{Q}(t_1)\ket{q, 0} = \bra{q'}e^{-i\hat{H}(T - t_2)}\hat{Q}e^{-i\hat{H}(t_2 - t_1)\hat{Q}e^{-iH t_1}}\ket{q} = \int_0^T \mathcal{D}q\; q(t_2)q(t_1)e^{iS[q, \dot{q}]}
+\end{equation}
+If instead $t_2 < t_1$, then we get:
+\begin{equation}
+    \int \mathcal{D}q q(t_2)q(t_1)e^{iS[q, \dot{q}]} = \bra{q', T}\hat{Q}(t_1)\hat{Q}(t_2)\ket{q, 0}
+\end{equation}
+i.e. the path integral produces \emph{time-ordered} correlation functions. Thus, in summary:
+\begin{equation}
+    \begin{split}
+        \int \mathcal{D}q\; O(q(t_2))O(q(t_1))e^{iS[q]} 
+        &= \Theta(t_2 - t_1)\bra{}\hat{O}(\hat{Q})(t_2) \hat{O}(\hat{Q})(t_1)\ket{} 
+        \\ &+ \Theta(t_1 - t_2)\bra{}\hat{O}(\hat{Q})(t_1) \hat{O}(\hat{Q})(t_2)\ket{} 
+        \\ &= \bra{}\mathcal{T}\{\hat{O}(\hat{Q})(t_2), \hat{O}(\hat{Q})(t_1)\}\ket{}
+    \end{split}
+\end{equation}
+Thus, time-ordered (Feynman) correlators naturally arise in path integrals. Note that time-dependent Hamiltonians would require much more work, as the time-evolution operator would be a time-ordered exponential in this case.
+
+One observation; operators in $\mathcal{T}\{\ldots \}$ ``commute'' in an obvious sense. Everything appearing in the above equation is symmetric in $t_1, t_2$.
+
+What we have done here for 2-point function generalizes for higher-point functions. For example:
+\begin{equation}
+    \int \mathcal{D}q \; q(t_n)\ldots q(t_1) e^{iS[q, \dot{q}]} = \bra{}\mathcal{T}\{\hat{Q}(t_n)\ldots \hat{Q}(t_1)\}\ket{}.
+\end{equation}
+and of course we can generalize to functions of $\hat{Q}$.
+
+For functions of $\hat{P}$, we have to keep track of this when doing the integrals over $p$ in the path integral derivation, and to first order this will give us $\sim \dot{q}$ inside of the integral.
+
+Finally, it seems like position and time have manifestly different roles here. But its worth noting that the $\hat{Q}$s should \emph{not} be thought of as position, just coordinates in some configuration space (e.g. a quantum dot). We will apply this formalism to theories with Lorentz invariance soon.

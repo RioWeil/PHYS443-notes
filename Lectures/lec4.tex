@@ -1,0 +1,221 @@
+\section{Transforming Fields Part 2, Revisiting the Relativistic Scalar Field}
+Recall the transformation of a scalar field:
+\begin{equation}
+    \phi(x) \to \phi'(x) = \phi(\Lambda^{-1}x)
+\end{equation}
+If $\mathcal{L}(x)$ is a scalar field (e.g. $\mathcal{L} = \frac{1}{2}m^2\phi^2)$, then its integral:
+\begin{equation}
+    S = \int d^4\mathcal{L}(x)
+\end{equation}
+is Lorentz invariant. We checked this mathematically, but its also obviously true; e.g. for temperature, all people in the room will agree on the average temperature of the room. This makes the action principle nice when we talk about symmetries/Lorentz invariance (compared to the Hamiltonian formulation).
+
+\subsection{Transforming Derivatives of Scalar Fields}
+If the Lagrangian was just $\mathcal{L} = \frac{1}{2}m^2\phi^2$, things would be a bit boring; let's consider adding derivatives, e.g. $\p_\mu \phi(x) = \dod{}{x^\mu\phantom{}}\phi(x)$. We would intuitively expect this to transform like a vector; let us check this intuition:
+\begin{equation}
+    O_\mu(x) = \dod{}{x^\mu\phantom{}} \to \dod{}{x^\mu\phantom{}}\phi(\Lambda^{-1}x) = \dod{\bar{x}^\nu\phantom{}}{x^\mu\phantom{}}\dod{}{\bar{x}^\nu\phantom{}}\phi(\bar{x}) = \Lambda_\mu^{\sp \nu}O_\nu(\bar{x} = \Lambda^{-1}x)
+\end{equation}
+where we identify $\dod{\bar{x}^\nu\phantom{}}{x^\mu\phantom{}}$ with $\Lambda^{-1} = \Lambda_\mu^{\sp \nu}$. 
+
+So the derivative transforms not as a scalar field, but as a vector field; you may have seen this before as $A_\mu(x)$, which appears in Maxwell's equations, or in QED for spin-1 particles.
+
+In this course, we mix a bit of traditional QFT I/II; we will go as deep as possible into scalar fields. In the second Winter term we look at fields with spin, photons etc. so stick around!
+
+Now, we note that:
+\begin{equation}
+    S = \int d^4 O_\mu(x)
+\end{equation}
+is \emph{not} a Lorentz invariant action. So, how do we built a L.I. action with derivatives? The answer is to \emph{contract} them, e.g.:
+\begin{equation}
+    \eta^{\mu\nu}\p_\mu\p_\nu \phi
+\end{equation}
+or:
+\begin{equation}
+    \eta^{\mu\nu}\p_\mu \phi \p_\nu \phi = -\dot{\phi}^2 + (\nabla \phi)^2
+\end{equation}
+are scalar fields. The second term is generally more interesting to include as it is quadratic in the fields. Note that Lorentz invariance forces the term in front of the gradient to be one; i.e. L.I. fixes the speed of light to be $c$ (1 in our units).
+
+Thus, the action for a free relativistic scalar is thus:
+\begin{equation}
+    S = -\int d^{d+1}x \frac{1}{2}(\p \phi)^2 + \frac{1}{2}m^2\phi^2 \stackrel{d=3}{\to} \int d^4x \frac{1}{2}\dot{\phi}^2 - \frac{1}{2}(\nabla \phi)^2 - \frac{1}{2}m^2\phi^2
+\end{equation}
+where:
+\begin{equation}
+    (\p \phi)^2 \equiv (\p_\mu \phi)^2 \equiv \eta^{\mu\nu}\p_\mu \phi \p_\nu \phi
+\end{equation}
+Note we will soon see that this leads to the expected form of the Hamiltonian:
+\begin{equation}
+    H = \int d^dx \frac{1}{2}\Pi^2 + \frac{1}{2}(\nabla \phi)^2 + \frac{1}{2}m^2\phi^2
+\end{equation}
+
+\subsection{Translations}
+Translations are also a symmetry of nature:
+\begin{equation}
+    x^\mu \to x^\mu + a^\mu.
+\end{equation}
+We have seen that Lorentz symmetry has $\frac{D(D-1)}{2}$ generators, which for $D = 4$ is 6 generators ($K_i, J_j$, or $\hat{M}_{\mu\nu}$). Translations have $D$ generators, for $D = 4$ they are $P_\mu = (P_0, \v{P}_i)$. These all mutually commute:
+\begin{equation}
+    [P_\mu, P_\nu] = 0
+\end{equation}
+We can \emph{extend} the Lorentz algebra to include translations:
+\begin{subequations}
+    \begin{align}
+    [J_i, P_0] &= 0
+    \\ [J_i, P_j] &= i\e_{ijk}P_k
+    \\ [K_i, P_0] &= iP_i
+    \\ [K_i, P_j] &= i\delta_{ij}P_0
+    \end{align}
+\end{subequations}
+
+\subsection{Return to Relativistic Free Scalar Field Theory; Quantizing the Continuum}
+The equation of motion of the relativistic free scalar field is:
+\begin{equation}
+    \frac{\delta S}{\delta \phi} = 0 \implies 0 = \eta^{\mu\nu}\p_\mu\p_\nu \phi - m^2\phi
+\end{equation}
+which of course is just the relativistic Klein-Gordon equation, which with the notation:
+\begin{equation}
+    \square = \eta^{\mu\nu}\p_\mu\p_\nu = -\p_t^2 + \nabla^2
+\end{equation}
+becomes:
+\begin{equation}
+    \square \phi - m^2\phi = 0.
+\end{equation}
+Let us directly canonically quantize this theory in the continuum.
+
+The momentum conjugate to $\phi(x)$ is:
+\begin{equation}
+    \Pi(x) = \frac{\delta S}{\delta \dot{\phi}(x)} = \dot{\phi(x)}
+\end{equation}
+Our Hamiltonian is:
+\begin{equation}
+    H = \int d^dx \Pi \dot{\phi} - \mathcal{L}(x) = \int d^dx \frac{1}{2}\Pi^2 + \frac{1}{2}(\nabla \phi)^2 + \frac{1}{2}m^2\phi^2.
+\end{equation}
+The (equal-time) classical Poisson brackets read:
+\begin{equation}
+    \{\phi(t, \v{x}), \Pi(t, \v{y})\} = \delta^d(\v{x} - \v{y})
+\end{equation}
+\begin{equation}
+    \{\phi, \phi\} = \{\Pi, \Pi\} = 0
+\end{equation}
+We diagonalize by working in momentum space:
+\begin{equation}
+    \phi_\v{k}(t) = \int d^dx e^{-i\v{k}\cdot\v{x}}\phi(\v{x}, t)
+\end{equation}
+with the reality condition $(\phi_{\v{k}})^* = \phi_{-\v{k}}$. Thus looking at the Poisson bracket of the $\v{k}$s:
+\begin{equation}
+    \{\phi_{\v{k}}, \Pi_{\v{k}'}\} = \int d^dx d^dy e^{-i\v{x}\cdot \v{k} - i\v{y} \cdot \v{k}} \{\phi(\v{x, t}), \Pi(\v{y}, t)\} = \int d^dx e^{-i\v{x}(\v{k} + \v{k}')} = (2\pi)^d \delta^d(\v{k} + \v{k}')
+\end{equation}
+Note the slightly interesting point that the Dirac delta sets $\v{k}' = -\v{k}$. 
+
+The Inverse Fourier transform is:
+\begin{equation}
+    \phi(t, \v{x}) = \int \frac{d^dk}{(2\pi)^d} e^{i\v{k} \cdot \v{x}} \phi_{\v{k}}(t) = \int d^dy \int \frac{d^dk}{(2\pi)^d}e^{i\v{k}\cdot (\v{x} - \v{y})}\phi(\v{y}, t) = \int d^dy \delta^d(\v{x} - \v{y})\phi(\v{y}, t) = \phi(\v{x}, t)
+\end{equation}
+Note that we do the change of basis first, and then quantize later. If we plug these definitions of the $k$ basis fields/momenta in the Hamiltonian, we obtain:
+\begin{equation}
+    H = \int \frac{d^dk}{(2\pi)^d}\frac{1}{2}\abs{\Pi_\v{k}}^2 + \frac{1}{2}(m^2 + \v{k}^2)\abs{\phi_\v{k}}^2
+\end{equation}
+We define:
+\begin{equation}
+    \e_{\v{k}} = \sqrt{m^2 + \v{k}^2}
+\end{equation}
+as the energy of a quanta with momentum $\v{k}$. To see how we got here, for example we have:
+\begin{equation}
+    \int d^d x \Pi_\v{x}^2 = \int \frac{d^dkd^dk'}{(2\pi)^{2d}}\int d^dx e^{i(\v{k} + \v{k'})\v{x}}\Pi_{\v{k}}\Pi_{\v{k}'}  = \int \frac{d^dkd^dk'}{(2\pi)^{2d}}(2\pi)^d\delta^d(\v{k} + \v{k}')\Pi_{\v{k}}\Pi_{\v{k}'} = \int \frac{d^dk}{(2\pi)^d}\Pi_{\v{k}}\Pi_{-\v{k}} = \int \frac{d^dk}{(2\pi)^d}\abs{\Pi_\v{k}}^2
+\end{equation}
+We now canonically quantize:
+\begin{equation}
+    (\phi(t, \v{x}), \Pi(t, \v{x})) \to (\hat{\phi}(t, \v{x}), \hat{\Pi}(t, \v{x}))
+\end{equation}
+so the Poisson brackets become promoted to commutators:
+\begin{equation}
+    [\hat{\phi}(t, \v{x}), \hat{\Pi}(t, \v{y})] = i\delta^d(\v{x} - \v{y})
+\end{equation}
+\begin{equation}
+    [\hat{\phi}_\v{k}, \Pi_{\v{k}'}] = i(2\pi)^d \delta^d(\v{k} + \v{k}')
+\end{equation}
+Note that there is the objection that this does not look very Lorentz covariant (we pick a time $t$, and $H, \Pi$ themselves are frame-dependent); since our action is Lorentz invariant this is OK, but we will see later that path integrals will resolve this apparent slight tension.
+
+We diagonalize the SHOs in the usual way:
+\begin{subequations}
+    \begin{align}
+        \hat{a}_\v{k} &= \sqrt{\frac{\e_\v{k}}{2}}(\hat{\phi}_\v{k} + i\frac{\Pi_\v{k}}{\e_\v{k}})
+        \\ \hat{a}_\v{k}^\dag &= \sqrt{\frac{\e_\v{k}}{2}}(\hat{\phi}_{-\v{k}} - i\frac{\Pi_{-\v{k}}}{\e_\v{k}})
+    \end{align}
+\end{subequations}
+which obey the expected commutation relations:
+\begin{equation}
+    [\hat{a}_\v{k}, \hat{a}_\v{k'}^\dag] = (2\pi)^d\delta^d(\v{k} - \v{k}')
+\end{equation}
+This yields the quantum Hamiltonian:
+\begin{equation}
+    \hat{H} = \int \frac{d^dk}{(2\pi)^d}\e_{\v{k}}(\hat{a}_\v{k}^\dag \hat{a}_\v{k} + \frac{1}{2})
+\end{equation}
+where we define the vacuum $\ket{0}$ as the state that is annihilated by all $\hat{a}_\v{k}$s:
+\begin{equation}
+    \hat{a}_\v{k}\ket{0} = 0 \quad \forall \v{k}
+\end{equation}
+A single particle state is:
+\begin{equation}
+    \hat{a}^\dag_\v{k}\ket{0} = \ket{n_\v{k} = 1, n_{\v{k}'=\v{k}} = 0} = \ket{\v{k}}
+\end{equation}
+This single-particle state has energy $\e_\v{k} = \sqrt{\v{k}^2 + m^2}$ above the vacuum, as one can check by acting $\hat{H}$ upon it.
+
+Notice that the ground state energy is infinite; this is why we discuss the energy relative to the vacuum/ground state. This doesn't matter in QFT, but it does matter in QGravity (this is known as the \emph{cosmological constant problem} - we won't solve it in this class).
+
+Note that these states do \emph{not} have norm 1!
+\begin{equation}
+    \braket{\v{k}}{\v{k}'} = \bra{0}\hat{a}_\v{k}a^\dag_{\v{k}'}\ket{0} = \bra{0}([\hat{a}_\v{k}, \hat{a}_{\v{k}'}^\dag] - a^\dag_{\v{k}'}\hat{a}_\v{k})\ket{0} = (2\pi)^d\delta^d(\v{k} - \v{k}') - 0 = (2\pi)^d\delta^d(\v{k} - \v{k}').
+\end{equation}
+Note that if we wanted to do things more rigorously, we could have a finite norm by working in finite volume and then take volume to infinity at the end. For our purposes, it will be more convenient to work in infinite volume where we have exact Lorentz invariance. The issue really comes about because the $\v{k}$ labels are continuous in the thermodynamic limit (labelled by $\v{k} \in \RR^d$).
+
+\subsection{Lorentz Invariant Normalization}
+In L.I. QFTs, there is a slightly better choice of normalization such that the norm of the states are L.I.; indeed;
+\begin{equation}
+    \braket{\v{k}}{\v{k}'} = (2\pi)^d\delta^d(\v{k} - \v{k}')
+\end{equation}
+is frame-dependent, which is something we would like to avoid. The intuition is because the normalization only depends on the $d$ space degrees of freedom. To see it explicitly, first determine how the $\vec{k}$ states transform. Recall that:
+\begin{equation}
+    \hat{\phi}(x) \to \hat{U}(\Lambda)^{-1}\hat{\phi}(x)\hat{U}(\Lambda) = \hat{\phi}(\Lambda^{-1}x)
+\end{equation}
+and from this we will find:
+\begin{equation}
+    \ket{\v{k}} \to \ket{\tilde{\v{k}}}
+\end{equation}
+where $\tilde{k}^i = \Lambda^i_{\sp\mu}k^\mu$. 
+
+It is tempting to introduce 4-vector $k^\mu = (k^0, \v{k})$ where we choose $k^0 = \e_\v{k} = \sqrt{\v{k}^2 + m^2}$. We then obtain:
+\begin{equation}
+    \bra{0}\hat{a}_\v{k}\hat{a}^\dag_{\v{k}'}\ket{0} \stackrel{?}{=} (2\pi)^{d+1} \delta^{d+1}(\v{k} - \v{k}')
+\end{equation} 
+However because $k_0, k_0'$ are fixed, this norm is actually infinite:
+\begin{equation}
+    \delta^{d+1}(k-k') = \delta(k^0-k'^0)\delta^{d}(\v{k} - \v{k}') = \delta(\e_{\v{k}} - \e_{\v{k}'})\delta^d(\v{k} - \v{k}') = \delta(0)\delta^d(\v{k} - \v{k}') = \infty \cdot \delta^d(\v{k} - \v{k}')
+\end{equation}
+The idea is that we really need to use a fixed number of delta function; there is no room for an extra one due to the fixing of the energy. But, there is something else that we can do here; we have an object that is not L.I.; we can try multiplying it with something else that is not L.I. and get a L.I. quantity out. Namely, we multiply by the energy $\e_{\v{k}}$. Then:
+\begin{equation}
+    \bra{0}\hat{a}_\v{k}\hat{a}^\dag_{\v{k}'}\ket{0} = (2\pi)^d 2\e_{\v{k}} \delta^d(\v{k} - \v{k}')
+\end{equation}
+and we will see that the changes to the delta function and the energy will perfectly cancel. In this choice of normalization, we redefine the ladder operators:
+\begin{equation}
+    \hat{a}_\v{k} \to \sqrt{2\e_\v{k}}\hat{a}_{\v{k}}.
+\end{equation}
+
+\subsection{Effective Field Theory}
+EFT is a big part of QFT; this is useful in CM but also in HEP. Here, we don't pretend to know what the exact action is, but I may know some things, e.g. the symmetries and degrees of freedom. We then try to write down the most general action that has these symmetries. 
+
+For example, going back to our action, let us add to it:
+\begin{equation}
+    S = -\int d^4x \frac{1}{2}(\p_\mu \phi)^2 + \frac{1}{2}m^2\phi^2 + \lambda \phi^4 + m\phi^3 + \lambda_6 \phi^6 + \ldots + [(\p_\mu \phi )^2]^2 + \square^2 \phi \phi + \ldots 
+\end{equation}
+Note that if one has a $\phi \leftrightarrow -\phi$ $\mathbb{Z}_2$ symmetry, this would forbid the $\phi^3$ term (and odd powers of $\phi$ more generally). Also to explicitly spell out some of the terms above:
+\begin{equation}
+    [(\p_\mu \phi)^2]^2 = [\eta^{\mu\nu}\p_\mu \phi \p_\nu \phi]^2
+\end{equation}
+\begin{equation}
+    \square^2 \phi \phi  = (\eta^{\mu\nu}\p_\mu\p_\nu \eta^{\alpha\beta}\p_\alpha\p_\beta \phi)\phi
+\end{equation}
+Note that we should make sure the mass dimensions of each of these terms makes sense. We've set $c = \hbar = 1$, so then $E \sim m$ and $\omega \sim p$. With this, let us study the mass dimensions, where $[m^n] = n$. 
+
+We want each term in the action to have the same dimension, and we can make sure that the couplings have the correct mass dimension by comparing to other terms. Each derivative adds a mass dimension, so for example with a term $\tilde{\lambda}\p^2\p^2\phi \phi$ we would want $[\tilde{\lambda}] = -2$ to make sure it has the same mass dimension (e.g.) as $\frac{1}{2}(\p_\mu \phi)^2$.
+
+What renormalization group will tell us is that terms with negative mass dimension are irrelevant, i.e. they are not relevant at lower energy scales, allowing us to consider simpler theories, i.e. higher order powers of $\phi$ in the action do little to change the physics at low energy.
